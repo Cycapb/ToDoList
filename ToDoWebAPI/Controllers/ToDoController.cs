@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Web.Http;
 using ToDoDAL.Abstract;
-using ToDoDAL.Concrete;
 using ToDoDAL.Model;
 
 
@@ -19,8 +17,7 @@ namespace ToDoWebAPI.Controllers
 
         public IEnumerable<ToDoList> GetToDoList()
         {
-           var list = _toDoRepository.GetList().ToList();
-           return list;
+           return _toDoRepository.GetList();
         } 
     }
 }
