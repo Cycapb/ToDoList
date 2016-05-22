@@ -52,6 +52,16 @@ namespace ToDoDAL.Concrete
             });
         }
 
+        public T GetItem(int id)
+        {
+            return _dbSet.Find(id);
+        }
+
+        public async Task<T> GetItemAsync(int id)
+        {
+            return await _dbSet.FindAsync(id);
+        }
+
         public void Create(T item)
         {
             _dbSet.Add(item);

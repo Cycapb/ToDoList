@@ -10,22 +10,22 @@
             <PropertyRef Name="GroupId" />
           </Key>
           <Property Name="GroupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" />
-          <Property Name="UserId" Type="varchar(max)" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserId" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="ToDoList">
           <Key>
             <PropertyRef Name="NoteId" />
           </Key>
           <Property Name="NoteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Comment" Type="varchar" MaxLength="250" />
-          <Property Name="GroupId" Type="int" />
-          <Property Name="StatusId" Type="bit" />
-          <Property Name="UserId" Type="varchar(max)" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
+          <Property Name="StatusId" Type="bit" Nullable="false" />
+          <Property Name="UserId" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <Association Name="FK_ToDoList_Group">
-          <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
+          <End Role="Group" Type="Self.Group" Multiplicity="1" />
           <End Role="ToDoList" Type="Self.ToDoList" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Group">
@@ -61,8 +61,8 @@
             <PropertyRef Name="GroupId" />
           </Key>
           <Property Name="GroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UserId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ToDoList" Relationship="todoModel.FK_ToDoList_Group" FromRole="Group" ToRole="ToDoList" />
         </EntityType>
         <EntityType Name="ToDoList">
@@ -70,15 +70,15 @@
             <PropertyRef Name="NoteId" />
           </Key>
           <Property Name="NoteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Comment" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="GroupId" Type="Int32" />
-          <Property Name="StatusId" Type="Boolean" />
-          <Property Name="UserId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <Property Name="StatusId" Type="Boolean" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Group" Relationship="todoModel.FK_ToDoList_Group" FromRole="ToDoList" ToRole="Group" />
         </EntityType>
         <Association Name="FK_ToDoList_Group">
-          <End Type="todoModel.Group" Role="Group" Multiplicity="0..1" />
+          <End Type="todoModel.Group" Role="Group" Multiplicity="1" />
           <End Type="todoModel.ToDoList" Role="ToDoList" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Group">

@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing.Printing;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Moq;
 using Ninject;
 using ToDoDAL.Abstract;
 using ToDoDAL.Concrete;
 using ToDoDAL.Model;
+using ToDoWebAPI.Abstract;
+using ToDoWebAPI.Concrete;
 
 namespace ToDoWebAPI.Infrastructure
 {
@@ -27,6 +25,7 @@ namespace ToDoWebAPI.Infrastructure
         {
             _kernel.Bind<IRepository<Group>>().To<EntityRepository<Group>>();
             _kernel.Bind<IRepository<ToDoList>>().To<EntityRepository<ToDoList>>();
+            _kernel.Bind<IEntityValueProvider<ToDoList>>().To<ToDoListProvider>();
         }
 
         public object GetService(Type serviceType)

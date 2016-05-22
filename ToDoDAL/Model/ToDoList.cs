@@ -17,8 +17,8 @@ namespace ToDoDAL.Model
         public int NoteId { get; set; }
         public string Name { get; set; }
         public string Comment { get; set; }
-        public Nullable<int> GroupId { get; set; }
-        public Nullable<bool> StatusId { get; set; }
+        public int GroupId { get; set; }
+        public bool StatusId { get; set; }
         public string UserId { get; set; }
     
         public virtual Group Group { get; set; }
