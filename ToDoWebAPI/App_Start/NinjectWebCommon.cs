@@ -1,3 +1,5 @@
+using ToDoWebAPI.Infrastructure;
+
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(ToDoWebAPI.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(ToDoWebAPI.App_Start.NinjectWebCommon), "Stop")]
 
@@ -61,6 +63,8 @@ namespace ToDoWebAPI.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-        }        
+            System.Web.Mvc.DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
+        }
+
     }
 }
