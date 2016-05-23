@@ -38,7 +38,7 @@ namespace ToDoDAL.Concrete
             this._disposed = true;
         }
 
-        public IEnumerable<T> GetList()
+        public virtual IEnumerable<T> GetList()
         {
             return _dbSet;
         }
@@ -52,7 +52,7 @@ namespace ToDoDAL.Concrete
             });
         }
 
-        public T GetItem(int id)
+        public virtual T GetItem(int id)
         {
             return _dbSet.Find(id);
         }
@@ -62,7 +62,7 @@ namespace ToDoDAL.Concrete
             return await _dbSet.FindAsync(id);
         }
 
-        public void Create(T item)
+        public virtual void Create(T item)
         {
             _dbSet.Add(item);
         }
@@ -72,7 +72,7 @@ namespace ToDoDAL.Concrete
             return Task.Run(()=>_dbSet.Add(item));
         }
 
-        public void Delete(int id)
+        public virtual void Delete(int id)
         {
             var itemToDel = _dbSet.Find(id);
             if (itemToDel != null)
@@ -93,7 +93,7 @@ namespace ToDoDAL.Concrete
             });
         }
 
-        public void Update(T item)
+        public virtual void Update(T item)
         {
             _context.Entry(item).State = EntityState.Modified;
         }
@@ -106,7 +106,7 @@ namespace ToDoDAL.Concrete
             });
         }
 
-        public void Save()
+        public virtual void Save()
         {
             _context.SaveChanges();
         }
