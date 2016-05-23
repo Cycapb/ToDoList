@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -130,7 +129,29 @@ namespace ToDoWebAPI.Tests
         [TestMethod]
         public void UpdateToDoList()
         {
+            var toDoList = _toDoList.AsQueryable();
+            var mockSet = new Mock<DbSet<ToDoList>>();
+            mockSet.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => mockSet.Object.FirstOrDefault(x => x.NoteId == (int)ids[0]));
+            mockSet.As<IQueryable<ToDoList>>().Setup(m => m.Provider).Returns(toDoList.Provider);
+            mockSet.As<IQueryable<ToDoList>>().Setup(m => m.Expression).Returns(toDoList.Expression);
+            mockSet.As<IQueryable<ToDoList>>().Setup(m => m.ElementType).Returns(toDoList.ElementType);
+            mockSet.As<IQueryable<ToDoList>>().Setup(m => m.GetEnumerator()).Returns(() => toDoList.GetEnumerator());
+            var mockContext = new Mock<todoEntities>();
+            mockContext.Setup(c => c.Set<ToDoList>()).Returns(mockSet.Object);
+            var itemId = 2;
+            Mock<EntityRepositoryFake<ToDoList>> mockRepo = new Mock<EntityRepositoryFake<ToDoList>>(mockContext.Object);
+            mockRepo.Setup(m => m.UpdateItem(It.IsAny<ToDoList>()));
+            mockRepo.Setup(m => m.GetItem(It.IsAny<int>())).Returns(mockSet.Object.Find(itemId));
+
+            var newTodo = mockRepo.Object.GetItem(itemId);
+            newTodo.Name = "N22";
+            mockRepo.Object.Update(newTodo);
+            var updatedItem = mockRepo.Object.GetItem(itemId);
+
+            mockRepo.Verify(m=>m.Update(newTodo),Times.Once);
             
+            Assert.AreEqual(updatedItem.Name,"N22");
         }
 
         [TestMethod]

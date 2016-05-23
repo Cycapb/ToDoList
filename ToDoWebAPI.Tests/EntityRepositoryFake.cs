@@ -44,12 +44,17 @@ namespace ToDoWebAPI.Tests
 
         public override void Update(T item)
         {
-            _context.Entry(item).State = EntityState.Modified;
+            UpdateItem(item);
         }
 
         public override void Save()
         {
             _context.SaveChanges();
+        }
+
+        public virtual void UpdateItem(T item)
+        {
+            _context.Entry(item).State = EntityState.Modified;
         }
     }
 }
