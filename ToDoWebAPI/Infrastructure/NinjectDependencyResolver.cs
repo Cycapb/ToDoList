@@ -26,6 +26,7 @@ namespace ToDoWebAPI.Infrastructure
             _kernel.Bind<IRepository<Group>>().To<EntityRepository<Group>>();
             _kernel.Bind<IRepository<ToDoList>>().To<EntityRepository<ToDoList>>();
             _kernel.Bind<IEntityValueProvider<ToDoList>>().To<ToDoListProvider>();
+            _kernel.Bind<IEntityValueProvider<Group>>().To<GroupProvider>();
         }
 
         public object GetService(Type serviceType)

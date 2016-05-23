@@ -30,12 +30,19 @@ namespace ToDoWebAPI.Concrete
         public Group GetValue(int id)
         {
             var item = _repository.GetItem(id);
-            return new Group()
+            if (item == null)
             {
-                GroupId = item.GroupId,
-                Name = item.Name,
-                UserId = item.UserId
-            };
+                return null;
+            }
+            else
+            {
+                return new Group()
+                {
+                    GroupId = item.GroupId,
+                    Name = item.Name,
+                    UserId = item.UserId
+                };
+            }
         }
 
         public void CreateValue(Group item)

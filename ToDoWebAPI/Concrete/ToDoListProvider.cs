@@ -33,15 +33,22 @@ namespace ToDoWebAPI.Concrete
         public ToDoList GetValue(int id)
         {
             var item = _repository.GetItem(id);
-            return new ToDoList()
+            if (item == null)
             {
-                Comment = item.Comment,
-                Name = item.Name,
-                GroupId = item.GroupId,
-                StatusId = item.StatusId,
-                UserId = item.UserId,
-                NoteId = item.NoteId
-            };
+                return null;
+            }
+            else
+            {
+                return new ToDoList()
+                {
+                    Comment = item.Comment,
+                    Name = item.Name,
+                    GroupId = item.GroupId,
+                    StatusId = item.StatusId,
+                    UserId = item.UserId,
+                    NoteId = item.NoteId
+                };
+            }
         }
         
         public void CreateValue(ToDoList item)
