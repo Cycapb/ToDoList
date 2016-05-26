@@ -28,17 +28,17 @@ namespace ToDoWebAPI.Concrete
 
         public void CreateValue(TaskGroup item)
         {
-            throw new NotImplementedException();
+            _repository.Create(item);
         }
 
         public void UpdateValue(TaskGroup item)
         {
-            throw new NotImplementedException();
+            _repository.Update(item);
         }
 
         public void DeleteValue(int id)
         {
-            throw new NotImplementedException();
+            _repository.Delete(id);
         }
     }
 }
