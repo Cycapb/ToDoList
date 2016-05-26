@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using ThreadTask = System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using ToDoDAL.Abstract;
+using Task = ToDoDAL.Model.MongoModel.Task;
 
 namespace ToDoDAL.Concrete
 {
-    public class MongoRepository<T> where T:IEntity<T>
+    public class MongoRepository<T> where T:IEntity
     {
         private readonly MongoClient _mongoClient;
         private readonly IMongoDatabase _mongoDatabase;
         private readonly IMongoCollection<T> _collection; 
-        private bool _disposed = false;
 
         public MongoRepository()
         {
@@ -22,25 +22,7 @@ namespace ToDoDAL.Concrete
             _mongoDatabase = _mongoClient.GetDatabase("todo");
             _collection = _mongoDatabase.GetCollection<T>(GetCollectionNameFromType(typeof (T)));
         }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(bool disposing)
-        {
-            if (!_disposed)
-            {
-                if (disposing)
-                {
-                    this.Dispose();
-                }
-            }
-            _disposed = true;
-        }
-
+        
         private string GetCollectionNameFromType(Type entitytype)
         {
             return entitytype.Name.ToLower();
@@ -51,20 +33,18 @@ namespace ToDoDAL.Concrete
             return _collection.AsQueryable().ToList();
         }
 
-        public async Task<IEnumerable<T>> GetListAsync()
+        public async ThreadTask.Task<IEnumerable<T>> GetListAsync()
         {
             return await _collection.AsQueryable().ToListAsync();
         }
 
         public T GetItem(int id)
         {
-            var filter = new BsonDocument("_id", id);
             return _collection.AsQueryable().SingleOrDefault(x => x.Id == id);
         }
 
-        public async Task<T> GetItemAsync(int id)
+        public async ThreadTask.Task<T> GetItemAsync(int id)
         {
-            var filter = new BsonDocument("_id", id);
             return await _collection.AsQueryable().Where(x => x.Id == id).SingleOrDefaultAsync();
         }
 
@@ -73,7 +53,7 @@ namespace ToDoDAL.Concrete
             _collection.InsertOne(item);
         }
 
-        public async Task CreateAsync(T item)
+        public async ThreadTask.Task CreateAsync(T item)
         {
             await _collection.InsertOneAsync(item);
         }
@@ -84,7 +64,7 @@ namespace ToDoDAL.Concrete
             _collection.FindOneAndDelete(filter);
         }
 
-        public async Task DeleteAsync(int id)
+        public async ThreadTask.Task DeleteAsync(int id)
         {
             var filter = new BsonDocument("_id", id);
             await _collection.FindOneAndDeleteAsync(filter);
@@ -93,15 +73,13 @@ namespace ToDoDAL.Concrete
         public void Update(T item)
         {
             var filter = new BsonDocument("_id",item.Id);
-            var update = new BsonDocument("$set",BsonValue.Create(item));
-            _collection.UpdateOne(filter, update);
+            _collection.ReplaceOne(filter, item);
         }
 
-        public async Task UpdateAsync(T item)
+        public async ThreadTask.Task UpdateAsync(T item)
         {
             var filter = new BsonDocument("_id", item.Id);
-            var update = new BsonDocument("$set", BsonValue.Create(item));
-            await _collection.UpdateOneAsync(filter, update);
+            await _collection.ReplaceOneAsync(filter, item);
         }
     }
 }

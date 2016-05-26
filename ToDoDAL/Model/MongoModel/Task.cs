@@ -2,7 +2,7 @@
 
 namespace ToDoDAL.Model.MongoModel
 {
-    public class Task:IEntity<Task>
+    public class Task:IEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

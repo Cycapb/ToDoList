@@ -1,6 +1,6 @@
 ﻿namespace ToDoDAL.Abstract
 {
-    public interface IEntity<T> 
+    public interface IEntity
     {
         int Id { get; set; }    
     }
