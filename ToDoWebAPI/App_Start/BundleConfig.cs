@@ -8,9 +8,10 @@ namespace ToDoWebAPI
         {
             bundles.Add(new StyleBundle("~/Content/bootstrap").Include(
                 "~/Content/bootstrap.css",
-                "~/Content/bootstrap-theme.css"));
+                "~/Content/bootstrap-theme.css",
+                "~/Site.css"));
 
-            bundles.Add(new ScriptBundle("/Script/knockout").Include(
+            bundles.Add(new ScriptBundle("~/Scripts/knockout").Include(
                 "~/Scripts/jquery-{version}.js",
                 "~/Scripts/knockout-{version}.js"));
         }

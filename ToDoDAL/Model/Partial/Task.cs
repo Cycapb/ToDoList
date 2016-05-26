@@ -4,7 +4,7 @@ using System.Web.Mvc;
 namespace ToDoDAL.Model
 {
     [MetadataType(typeof(ToDoListMetadata))]
-    public partial class ToDoList
+    public partial class Task
     {
 
     }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="todoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="todo_testModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Group">
           <Key>
             <PropertyRef Name="GroupId" />
@@ -36,7 +36,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="todoModelStoreContainer">
+        <EntityContainer Name="todo_testModelStoreContainer">
           <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ToDoList" EntityType="Self.ToDoList" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_ToDoList_Group" Association="Self.FK_ToDoList_Group">
@@ -44,42 +44,35 @@
             <End Role="ToDoList" EntitySet="ToDoList" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="todoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="todoEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Group" EntityType="todoModel.Group" />
-          <EntitySet Name="ToDoList" EntityType="todoModel.ToDoList" />
-          <AssociationSet Name="FK_ToDoList_Group" Association="todoModel.FK_ToDoList_Group">
-            <End Role="Group" EntitySet="Group" />
-            <End Role="ToDoList" EntitySet="ToDoList" />
-          </AssociationSet>
-        </EntityContainer>
+      <Schema Namespace="todo_testModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Group">
           <Key>
             <PropertyRef Name="GroupId" />
           </Key>
           <Property Name="GroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ToDoList" Relationship="todoModel.FK_ToDoList_Group" FromRole="Group" ToRole="ToDoList" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ToDoList" Relationship="Self.FK_ToDoList_Group" FromRole="Group" ToRole="ToDoList" />
         </EntityType>
         <EntityType Name="ToDoList">
           <Key>
             <PropertyRef Name="NoteId" />
           </Key>
           <Property Name="NoteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Comment" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="GroupId" Type="Int32" Nullable="false" />
           <Property Name="StatusId" Type="Boolean" Nullable="false" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Group" Relationship="todoModel.FK_ToDoList_Group" FromRole="ToDoList" ToRole="Group" />
+          <Property Name="UserId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Group" Relationship="Self.FK_ToDoList_Group" FromRole="ToDoList" ToRole="Group" />
         </EntityType>
         <Association Name="FK_ToDoList_Group">
-          <End Type="todoModel.Group" Role="Group" Multiplicity="1" />
-          <End Type="todoModel.ToDoList" Role="ToDoList" Multiplicity="*" />
+          <End Role="Group" Type="Self.Group" Multiplicity="1" />
+          <End Role="ToDoList" Type="Self.ToDoList" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Group">
               <PropertyRef Name="GroupId" />
@@ -89,30 +82,38 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="todoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Group" EntityType="Self.Group" />
+          <EntitySet Name="ToDoList" EntityType="Self.ToDoList" />
+          <AssociationSet Name="FK_ToDoList_Group" Association="Self.FK_ToDoList_Group">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="ToDoList" EntitySet="ToDoList" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="todoModelStoreContainer" CdmEntityContainer="todoEntities">
+        <EntityContainerMapping StorageEntityContainer="todo_testModelStoreContainer" CdmEntityContainer="todoEntities">
           <EntitySetMapping Name="Group">
-            <EntityTypeMapping TypeName="todoModel.Group">
+            <EntityTypeMapping TypeName="todo_testModel.Group">
               <MappingFragment StoreEntitySet="Group">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ToDoList">
-            <EntityTypeMapping TypeName="todoModel.ToDoList">
+            <EntityTypeMapping TypeName="todo_testModel.ToDoList">
               <MappingFragment StoreEntitySet="ToDoList">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
-                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="NoteId" ColumnName="NoteId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Список дел";
+}
+@section scripts{
+    <script>
+        var model = {
+            toDoLists: ko.observableArray()
+        }
+
+        function sendAjaxRequest(httpMethod,serviceUrl,callback,url) {
+            $.ajax("/api/" + serviceUrl + (url ? "/" + url : ""),
+            {
+                type: httpMethod,
+                success: callback
+            });
+        }
+
+        function getAllItems() {
+            sendAjaxRequest("GET","todo",function(data) {
+                model.toDoLists.removeAll();
+                for (var i = 0; i < data.length; i++) {
+                    //if (data[i].StatusId==false) {
+                        model.toDoLists.push(data[i]);
+                    //}
+                }
+            });
+        }
+
+        function deleteItem(item) {
+            sendAjaxRequest("DELETE","todo",function() {
+                for (var i = 0; i < model.toDoLists.length; i++) {
+                    if (model.toDoLists()[i].NoteId == item.NoteId) {
+                        model.toDoLists.remove(model.toDoLists()[i]);
+                        break;
+                    }
+                }
+            },item.NoteId);
+
+        }
+
+        $(document).ready(function () {
+            getAllItems();
+            ko.applyBindings(model);
+        });
+    </script>   
+}
+
+@section body{
+    <div class="panel panel-primary">
+    <div class="panel-heading">Мой список задач</div>
+    <div class="panel-body">
+        <table id="toDoTable" class="table table-striped">
+            <tr>
+                <th>Название</th>
+                <th>Комментарий</th>
+                <th>Действия</th>
+            </tr>
+            <tbody data-bind="foreach: model.toDoLists">
+            <tr>
+                <td data-bind="text: Name"></td>
+                <td data-bind="text: Comment"></td>
+                <td><button class="btn btn-danger" data-bind="click: deleteItem"></button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>    
+}

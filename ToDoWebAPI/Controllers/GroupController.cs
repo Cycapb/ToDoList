@@ -1,34 +1,33 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using ToDoDAL.Model;
+using ToDoDAL.Model.MongoModel;
 using ToDoWebAPI.Abstract;
 
 namespace ToDoWebAPI.Controllers
 {
     public class GroupController : ApiController
     {
-        private readonly IEntityValueProvider<Group> _valueProvider;
+        private readonly IMongoValueProvider<TaskGroup> _valueProvider;
 
-        public GroupController(IEntityValueProvider<Group> valueProvider)
+        public GroupController(IMongoValueProvider<TaskGroup> valueProvider)
         {
             _valueProvider = valueProvider;
         }
 
-        public IEnumerable<Group> GetValues()
+        public IEnumerable<TaskGroup> GetValues()
         {
-            return _valueProvider.GetValues().ToList();
+            return _valueProvider.GetValues();
         }
 
-        public Group GetGroup(int id)
+        public TaskGroup GetGroup(int id)
         {
             return _valueProvider.GetValue(id);
         }
 
         [HttpPost]
-        public HttpResponseMessage CreateGroup(Group group)
+        public HttpResponseMessage CreateGroup(TaskGroup group)
         {
             if (ModelState.IsValid)
             {
@@ -42,7 +41,7 @@ namespace ToDoWebAPI.Controllers
         }
 
         [HttpPut]
-        public HttpResponseMessage UpdateGroup(Group item)
+        public HttpResponseMessage UpdateGroup(TaskGroup item)
         {
             if (ModelState.IsValid)
             {

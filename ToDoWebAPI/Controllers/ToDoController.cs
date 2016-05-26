@@ -3,7 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using ToDoDAL.Model;
+using ToDoDAL.Model.MongoModel;
 using ToDoWebAPI.Abstract;
 
 
@@ -11,25 +11,33 @@ namespace ToDoWebAPI.Controllers
 {
     public class ToDoController : ApiController
     {
-        private readonly IEntityValueProvider<ToDoList> _valueProvider;
+        //private readonly IEntityValueProvider<ToDoList> _valueProvider;
 
-        public ToDoController(IEntityValueProvider<ToDoList> valueProvider)
+        //public ToDoController(IEntityValueProvider<ToDoList> valueProvider)
+        //{
+        //    _valueProvider = valueProvider;
+        //}
+
+        private readonly IMongoValueProvider<Task> _valueProvider;
+
+        public ToDoController(IMongoValueProvider<Task> valueProvider)
         {
             _valueProvider = valueProvider;
         }
 
-        public IEnumerable<ToDoList> GetToDoList()
+        public IEnumerable<Task> GetToDoList()
         {
-           return _valueProvider.GetValues().ToList();
+            var tasks = _valueProvider.GetValues().ToList();
+            return tasks;
         }
 
-        public ToDoList GetToDoList(int id)
+        public Task GetToDoList(int id)
         {
             return _valueProvider.GetValue(id);
         }
 
         [HttpPost]
-        public HttpResponseMessage CreateToDoList(ToDoList item)
+        public HttpResponseMessage CreateToDoList(Task item)
         {
             if (ModelState.IsValid)
             {
@@ -43,7 +51,7 @@ namespace ToDoWebAPI.Controllers
         }
 
         [HttpPut]
-        public HttpResponseMessage UpdateToDoList(ToDoList item)
+        public HttpResponseMessage UpdateToDoList(Task item)
         {
             if (ModelState.IsValid)
             {
