@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ToDoDAL.Abstract;
 using ToDoWebAPI.Abstract;
-using ToDoDAL.Concrete;
 using ToDoDAL.Model.MongoModel;
 
 namespace ToDoWebAPI.Concrete
 {
     public class MongoTaskGroupValueProvider : IMongoValueProvider<TaskGroup>
     {
-        private readonly MongoRepository<TaskGroup> _repository;
+        private readonly IMongoRepository<TaskGroup> _repository;
 
-        public MongoTaskGroupValueProvider()
+        public MongoTaskGroupValueProvider(IMongoRepository<TaskGroup> repository)
         {
-            _repository = new MongoRepository<TaskGroup>();
+            _repository = repository;
         }
 
         public IEnumerable<TaskGroup> GetValues()

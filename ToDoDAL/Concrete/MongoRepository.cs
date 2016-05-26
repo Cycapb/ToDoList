@@ -10,7 +10,7 @@ using Task = ToDoDAL.Model.MongoModel.Task;
 
 namespace ToDoDAL.Concrete
 {
-    public class MongoRepository<T> where T:IEntity
+    public class MongoRepository<T>:IMongoRepository<T> where T:class,IEntity
     {
         private readonly MongoClient _mongoClient;
         private readonly IMongoDatabase _mongoDatabase;

@@ -30,6 +30,8 @@ namespace ToDoWebAPI.Infrastructure
             _kernel.Bind<IEntityValueProvider<Group>>().To<GroupProvider>();
             _kernel.Bind<IMongoValueProvider<TaskGroup>>().To<MongoTaskGroupValueProvider>();
             _kernel.Bind<IMongoValueProvider<ToDoDAL.Model.MongoModel.Task>>().To<MongoTaskValueProvider>();
+            _kernel.Bind<IMongoRepository<ToDoDAL.Model.MongoModel.Task>>().To<MongoRepository<ToDoDAL.Model.MongoModel.Task>>();
+            _kernel.Bind<IMongoRepository<TaskGroup>>().To<MongoRepository<TaskGroup>>();
         }
 
         public object GetService(Type serviceType)

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ToDoDAL.Concrete;
+using ToDoDAL.Abstract;
 using ToDoWebAPI.Abstract;
 using ToDoDAL.Model.MongoModel;
 
@@ -9,11 +9,11 @@ namespace ToDoWebAPI.Concrete
 {
     public class MongoTaskValueProvider:IMongoValueProvider<Task>
     {
-        private readonly MongoRepository<Task> _repository;
+        private readonly IMongoRepository<Task> _repository;
 
-        public MongoTaskValueProvider()
+        public MongoTaskValueProvider(IMongoRepository<Task> repostitory)
         {
-            _repository = new MongoRepository<Task>();
+            _repository = repostitory;
         }
 
         public IEnumerable<Task> GetValues()

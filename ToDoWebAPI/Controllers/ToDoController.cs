@@ -11,13 +11,6 @@ namespace ToDoWebAPI.Controllers
 {
     public class ToDoController : ApiController
     {
-        //private readonly IEntityValueProvider<ToDoList> _valueProvider;
-
-        //public ToDoController(IEntityValueProvider<ToDoList> valueProvider)
-        //{
-        //    _valueProvider = valueProvider;
-        //}
-
         private readonly IMongoValueProvider<Task> _valueProvider;
 
         public ToDoController(IMongoValueProvider<Task> valueProvider)
