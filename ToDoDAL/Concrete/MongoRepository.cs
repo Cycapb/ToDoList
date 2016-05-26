@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using ToDoDAL.Abstract;
 
 namespace ToDoDAL.Concrete
@@ -61,9 +62,10 @@ namespace ToDoDAL.Concrete
             return _collection.AsQueryable().SingleOrDefault(x => x.Id == id);
         }
 
-        public Task<T> GetItemAsync(int id)
+        public async Task<T> GetItemAsync(int id)
         {
-            throw new NotImplementedException();
+            var filter = new BsonDocument("_id", id);
+            return await _collection.AsQueryable().Where(x => x.Id == id).SingleOrDefaultAsync();
         }
 
         public void Create(T item)
@@ -71,9 +73,9 @@ namespace ToDoDAL.Concrete
             _collection.InsertOne(item);
         }
 
-        public Task CreateAsync(T item)
+        public async Task CreateAsync(T item)
         {
-            throw new NotImplementedException();
+            await _collection.InsertOneAsync(item);
         }
 
         public void Delete(int id)
@@ -82,29 +84,24 @@ namespace ToDoDAL.Concrete
             _collection.FindOneAndDelete(filter);
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var filter = new BsonDocument("_id", id);
+            await _collection.FindOneAndDeleteAsync(filter);
         }
 
         public void Update(T item)
         {
-            throw new NotImplementedException();
+            var filter = new BsonDocument("_id",item.Id);
+            var update = new BsonDocument("$set",BsonValue.Create(item));
+            _collection.UpdateOne(filter, update);
         }
 
-        public Task UpdateAsync(T item)
+        public async Task UpdateAsync(T item)
         {
-            throw new NotImplementedException();
-        }
-
-        public void Save()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SaveAsync()
-        {
-            throw new NotImplementedException();
+            var filter = new BsonDocument("_id", item.Id);
+            var update = new BsonDocument("$set", BsonValue.Create(item));
+            await _collection.UpdateOneAsync(filter, update);
         }
     }
 }

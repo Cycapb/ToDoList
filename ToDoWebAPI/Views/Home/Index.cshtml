@@ -19,9 +19,7 @@
             sendAjaxRequest("GET","todo",function(data) {
                 model.toDoLists.removeAll();
                 for (var i = 0; i < data.length; i++) {
-                    //if (data[i].StatusId==false) {
                         model.toDoLists.push(data[i]);
-                    //}
                 }
             });
         }
@@ -29,7 +27,7 @@
         function deleteItem(item) {
             sendAjaxRequest("DELETE","todo",function() {
                 for (var i = 0; i < model.toDoLists.length; i++) {
-                    if (model.toDoLists()[i].NoteId == item.NoteId) {
+                    if (model.toDoLists()[i].Id == item.Id) {
                         model.toDoLists.remove(model.toDoLists()[i]);
                         break;
                     }
