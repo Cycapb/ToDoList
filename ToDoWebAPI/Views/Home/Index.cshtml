@@ -7,7 +7,7 @@
             toDoLists: ko.observableArray()
         }
 
-        function sendAjaxRequest(httpMethod,serviceUrl,callback,url) {
+        function sendAjaxRequest(httpMethod, serviceUrl, callback, url) {
             $.ajax("/api/" + serviceUrl + (url ? "/" + url : ""),
             {
                 type: httpMethod,
@@ -16,24 +16,23 @@
         }
 
         function getAllItems() {
-            sendAjaxRequest("GET","todo",function(data) {
+            sendAjaxRequest("GET", "todo", function(data) {
                 model.toDoLists.removeAll();
                 for (var i = 0; i < data.length; i++) {
-                        model.toDoLists.push(data[i]);
+                    model.toDoLists.push(data[i]);
                 }
             });
         }
 
-        function deleteItem(item) {
-            sendAjaxRequest("DELETE","todo",function() {
-                for (var i = 0; i < model.toDoLists.length; i++) {
+        function removeItem(item) {
+            sendAjaxRequest("DELETE", "todo",function () {
+                for (var i = 0; i < model.toDoLists().length; i++) {
                     if (model.toDoLists()[i].Id == item.Id) {
                         model.toDoLists.remove(model.toDoLists()[i]);
                         break;
                     }
                 }
-            },item.NoteId);
-
+            }, item.Id);
         }
 
         $(document).ready(function () {
@@ -57,7 +56,7 @@
             <tr>
                 <td data-bind="text: Name"></td>
                 <td data-bind="text: Comment"></td>
-                <td><button class="btn btn-danger" data-bind="click: deleteItem"></button></td>
+                <td><button class="btn btn-xs btn-danger" data-bind="click: removeItem">Удалить</button></td>
             </tr>
             </tbody>
         </table>

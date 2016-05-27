@@ -39,12 +39,28 @@ namespace ToDoDAL.Concrete
 
         public T GetItem(string id)
         {
-            return _collection.AsQueryable().SingleOrDefault(x => x.Id == id);
+            try
+            {
+                return _collection.AsQueryable().SingleOrDefault(x => x.Id == id);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            
         }
         
         public async Task<T> GetItemAsync(string id)
         {
-            return await _collection.AsQueryable().Where(x => x.Id == id).SingleOrDefaultAsync();
+            try
+            {
+                return await _collection.AsQueryable().Where(x => x.Id == id).SingleOrDefaultAsync();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            
         }
 
         public T Create(T item)
