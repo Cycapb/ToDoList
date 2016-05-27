@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using ToDoDAL.Abstract;
 using ToDoWebAPI.Abstract;
@@ -26,9 +25,9 @@ namespace ToDoWebAPI.Concrete
             return _repository.GetItem(id);
         }
 
-        public void CreateValue(Task item)
+        public Task CreateValue(Task item)
         {
-            _repository.Create(item);
+            return _repository.Create(item);
         }
 
         public void UpdateValue(Task item)

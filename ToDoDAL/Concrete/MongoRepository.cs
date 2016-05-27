@@ -77,8 +77,8 @@ namespace ToDoDAL.Concrete
 
         public void Delete(string id)
         {
-            var filter = new BsonDocument("_id",id);
-            _collection.FindOneAndDelete(filter);
+            var filter = new BsonDocument("_id", new BsonObjectId(new ObjectId(id)));
+            _collection.DeleteOne(filter);
         }
 
         public async Task DeleteAsync(string id)
@@ -89,13 +89,13 @@ namespace ToDoDAL.Concrete
 
         public void Update(T item)
         {
-            var filter = new BsonDocument("_id",BsonValue.Create(item.Id));
+            var filter = new BsonDocument("_id", new BsonObjectId(new ObjectId(item.Id)));
             _collection.ReplaceOne(filter, item);
         }
 
         public async Task UpdateAsync(T item)
         {
-            var filter = new BsonDocument("_id", BsonValue.Create(item.Id));
+            var filter = new BsonDocument("_id", new BsonObjectId(new ObjectId(item.Id)));
             await _collection.ReplaceOneAsync(filter, item);
         }
     }

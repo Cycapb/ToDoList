@@ -26,9 +26,9 @@ namespace ToDoWebAPI.Concrete
             return _repository.GetItem(id);
         }
 
-        public void CreateValue(TaskGroup item)
+        public TaskGroup CreateValue(TaskGroup item)
         {
-            _repository.Create(item);
+            return _repository.Create(item);
         }
 
         public void UpdateValue(TaskGroup item)
