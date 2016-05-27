@@ -21,7 +21,7 @@ namespace ToDoWebAPI.Concrete
             return _repository.GetList().ToList();
         }
 
-        public TaskGroup GetValue(int id)
+        public TaskGroup GetValue(string id)
         {
             return _repository.GetItem(id);
         }
@@ -36,7 +36,7 @@ namespace ToDoWebAPI.Concrete
             _repository.Update(item);
         }
 
-        public void DeleteValue(int id)
+        public void DeleteValue(string id)
         {
             _repository.Delete(id);
         }

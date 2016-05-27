@@ -21,7 +21,7 @@ namespace ToDoWebAPI.Controllers
             return _valueProvider.GetValues();
         }
 
-        public TaskGroup GetGroup(int id)
+        public TaskGroup GetGroup(string id)
         {
             return _valueProvider.GetValue(id);
         }
@@ -54,7 +54,7 @@ namespace ToDoWebAPI.Controllers
             }
         }
 
-        public HttpResponseMessage DeleteGroup(int id)
+        public HttpResponseMessage DeleteGroup(string id)
         {
             _valueProvider.DeleteValue(id);
             return new HttpResponseMessage(HttpStatusCode.OK);

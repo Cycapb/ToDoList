@@ -20,11 +20,10 @@ namespace ToDoWebAPI.Controllers
 
         public IEnumerable<Task> GetToDoList()
         {
-            var tasks = _valueProvider.GetValues().ToList();
-            return tasks;
+            return _valueProvider.GetValues().ToList();
         }
 
-        public Task GetToDoList(int id)
+        public Task GetToDoList(string id)
         {
             return _valueProvider.GetValue(id);
         }
@@ -57,7 +56,7 @@ namespace ToDoWebAPI.Controllers
             }
         }
 
-        public HttpResponseMessage DeleteToDoList(int id)
+        public HttpResponseMessage DeleteToDoList(string id)
         {
            _valueProvider.DeleteValue(id);
             return new HttpResponseMessage(HttpStatusCode.OK);

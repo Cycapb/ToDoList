@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ThreadTask = System.Threading.Tasks;
+using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using ToDoDAL.Abstract;
-using Task = ToDoDAL.Model.MongoModel.Task;
 
 namespace ToDoDAL.Concrete
 {
@@ -33,38 +32,40 @@ namespace ToDoDAL.Concrete
             return _collection.AsQueryable().ToList();
         }
 
-        public async ThreadTask.Task<IEnumerable<T>> GetListAsync()
+        public async Task<IEnumerable<T>> GetListAsync()
         {
             return await _collection.AsQueryable().ToListAsync();
         }
 
-        public T GetItem(int id)
+        public T GetItem(string id)
         {
             return _collection.AsQueryable().SingleOrDefault(x => x.Id == id);
         }
-
-        public async ThreadTask.Task<T> GetItemAsync(int id)
+        
+        public async Task<T> GetItemAsync(string id)
         {
             return await _collection.AsQueryable().Where(x => x.Id == id).SingleOrDefaultAsync();
         }
 
-        public void Create(T item)
+        public T Create(T item)
         {
             _collection.InsertOne(item);
+            return item;
         }
 
-        public async ThreadTask.Task CreateAsync(T item)
+        public async Task<T> CreateAsync(T item)
         {
             await _collection.InsertOneAsync(item);
+            return item;
         }
 
-        public void Delete(int id)
+        public void Delete(string id)
         {
             var filter = new BsonDocument("_id",id);
             _collection.FindOneAndDelete(filter);
         }
 
-        public async ThreadTask.Task DeleteAsync(int id)
+        public async Task DeleteAsync(string id)
         {
             var filter = new BsonDocument("_id", id);
             await _collection.FindOneAndDeleteAsync(filter);
@@ -72,13 +73,13 @@ namespace ToDoDAL.Concrete
 
         public void Update(T item)
         {
-            var filter = new BsonDocument("_id",item.Id);
+            var filter = new BsonDocument("_id",BsonValue.Create(item.Id));
             _collection.ReplaceOne(filter, item);
         }
 
-        public async ThreadTask.Task UpdateAsync(T item)
+        public async Task UpdateAsync(T item)
         {
-            var filter = new BsonDocument("_id", item.Id);
+            var filter = new BsonDocument("_id", BsonValue.Create(item.Id));
             await _collection.ReplaceOneAsync(filter, item);
         }
     }

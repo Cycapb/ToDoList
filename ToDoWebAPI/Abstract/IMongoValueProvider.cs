@@ -6,9 +6,9 @@ namespace ToDoWebAPI.Abstract
     public interface IMongoValueProvider<T>
     {
         IEnumerable<T> GetValues();
-        T GetValue(int id);
+        T GetValue(string id);
         void CreateValue(T item);
         void UpdateValue(T item);
-        void DeleteValue(int id);
+        void DeleteValue(string id);
     }
 }

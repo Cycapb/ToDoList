@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
-using ToDoDAL.Abstract;
+using ToDoDAL.Concrete;
 
 namespace ToDoDAL.Model.MongoModel
 {
-    public class TaskGroup:IEntity
+    public class TaskGroup:Entity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
-        public IEnumerable<Task> Tasks { get; set; } 
+        public string Comment { get; set; }
+        public IEnumerable<string> TaskIds { get; set; } 
         public string UserId { get; set; }
     }
 }

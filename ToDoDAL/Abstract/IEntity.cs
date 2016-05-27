@@ -1,7 +1,12 @@
-﻿namespace ToDoDAL.Abstract
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace ToDoDAL.Abstract
 {
-    public interface IEntity
+    public interface IEntity 
     {
-        int Id { get; set; }    
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        string Id { get; set; }    
     }
 }

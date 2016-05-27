@@ -7,12 +7,12 @@ namespace ToDoDAL.Abstract
     {
         IEnumerable<T> GetList();
         Task<IEnumerable<T>> GetListAsync();
-        T GetItem(int id);
-        Task<T> GetItemAsync(int id);
-        void Create(T item);
-        Task CreateAsync(T item);
-        void Delete(int id);
-        Task DeleteAsync(int id);
+        T GetItem(string id);
+        Task<T> GetItemAsync(string id);
+        T Create(T item);
+        Task<T> CreateAsync(T item);
+        void Delete(string id);
+        Task DeleteAsync(string id);
         void Update(T item);
         Task UpdateAsync(T item);
     }
