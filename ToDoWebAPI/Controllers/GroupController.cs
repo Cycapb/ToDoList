@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using HomeAccountingSystem_DAL.Abstract;
 using ToDoDAL.Model.MongoModel;
 using ToDoWebAPI.Abstract;
 
@@ -16,9 +17,16 @@ namespace ToDoWebAPI.Controllers
             _valueProvider = valueProvider;
         }
 
-        public IEnumerable<TaskGroup> GetValues()
+        public IEnumerable<TaskGroup> GetValues(IWorkingUser user)
         {
-            return _valueProvider.GetValues();
+            if (user == null)
+            {
+                return null;
+            }
+            else
+            {
+                return _valueProvider.GetValues();
+            }
         }
 
         public TaskGroup GetGroup(string id)

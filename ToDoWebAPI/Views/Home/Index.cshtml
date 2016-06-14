@@ -23,8 +23,10 @@
         function getAllItems() {
             sendAjaxRequest("GET", "todo", function(data) {
                 model.toDoLists.removeAll();
-                for (var i = 0; i < data.length; i++) {
-                    model.toDoLists.push(data[i]);
+                if (data != null) {
+                    for (var i = 0; i < data.length; i++) {
+                        model.toDoLists.push(data[i]);
+                    }
                 }
             });
         }

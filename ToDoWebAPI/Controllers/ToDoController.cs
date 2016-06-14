@@ -3,9 +3,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.UI.WebControls.WebParts;
 using ToDoDAL.Model.MongoModel;
 using ToDoWebAPI.Abstract;
-
+using HomeAccountingSystem_DAL.Abstract;
 
 namespace ToDoWebAPI.Controllers
 {
@@ -18,9 +19,16 @@ namespace ToDoWebAPI.Controllers
             _valueProvider = valueProvider;
         }
 
-        public IEnumerable<Task> GetToDoList()
+        public IEnumerable<Task> GetToDoList(IWorkingUser user)
         {
-            return _valueProvider.GetValues().ToList();
+            if (user == null)
+            {
+                return null;
+            }
+            else
+            {
+                return _valueProvider.GetValues().Where(x => x.UserId == user.Id).ToList();
+            }
         }
 
         public Task GetToDoList(string id)
