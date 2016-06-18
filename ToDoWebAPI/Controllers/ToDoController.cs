@@ -3,41 +3,34 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.UI.WebControls.WebParts;
-using ToDoDAL.Model.MongoModel;
 using ToDoWebAPI.Abstract;
 using HomeAccountingSystem_DAL.Abstract;
+using ToDoDAL.Model;
+using Task = ToDoDAL.Model.MongoModel.Task;
 
 namespace ToDoWebAPI.Controllers
 {
     public class ToDoController : ApiController
     {
-        private readonly IMongoValueProvider<Task> _valueProvider;
+        private readonly IEntityValueProvider<ToDoList> _valueProvider;
 
-        public ToDoController(IMongoValueProvider<Task> valueProvider)
+        public ToDoController(IEntityValueProvider<ToDoList> valueProvider)
         {
             _valueProvider = valueProvider;
         }
 
-        public IEnumerable<Task> GetToDoList(IWorkingUser user)
+        public IEnumerable<ToDoList> GetToDoList(string userId)
         {
-            if (user == null)
-            {
-                return null;
-            }
-            else
-            {
-                return _valueProvider.GetValues().Where(x => x.UserId == user.Id).ToList();
-            }
+            return userId == null ? null : _valueProvider.GetValues().Where(x => x.UserId == userId).ToList();
         }
 
-        public Task GetToDoList(string id)
+        public ToDoList GetToDoList(int id)
         {
             return _valueProvider.GetValue(id);
         }
 
         [HttpPost]
-        public HttpResponseMessage CreateToDoList(Task item)
+        public HttpResponseMessage CreateToDoList(ToDoList item)
         {
             if (ModelState.IsValid)
             {
@@ -51,7 +44,7 @@ namespace ToDoWebAPI.Controllers
         }
 
         [HttpPut]
-        public HttpResponseMessage UpdateToDoList(Task item)
+        public HttpResponseMessage UpdateToDoList(ToDoList item)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +57,7 @@ namespace ToDoWebAPI.Controllers
             }
         }
 
-        public HttpResponseMessage DeleteToDoList(string id)
+        public HttpResponseMessage DeleteToDoList(int id)
         {
            _valueProvider.DeleteValue(id);
             return new HttpResponseMessage(HttpStatusCode.OK);

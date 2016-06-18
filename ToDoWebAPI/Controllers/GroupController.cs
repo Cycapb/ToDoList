@@ -1,41 +1,34 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using HomeAccountingSystem_DAL.Abstract;
-using ToDoDAL.Model.MongoModel;
+using ToDoDAL.Model;
 using ToDoWebAPI.Abstract;
 
 namespace ToDoWebAPI.Controllers
 {
     public class GroupController : ApiController
     {
-        private readonly IMongoValueProvider<TaskGroup> _valueProvider;
+        private readonly IEntityValueProvider<Group> _valueProvider;
 
-        public GroupController(IMongoValueProvider<TaskGroup> valueProvider)
+        public GroupController(IEntityValueProvider<Group> valueProvider)
         {
             _valueProvider = valueProvider;
         }
 
-        public IEnumerable<TaskGroup> GetValues(IWorkingUser user)
+        public IEnumerable<Group> GetValues(string userId)
         {
-            if (user == null)
-            {
-                return null;
-            }
-            else
-            {
-                return _valueProvider.GetValues();
-            }
+           return userId == null? null :_valueProvider.GetValues().Where(x => x.UserId == userId).ToList();
         }
 
-        public TaskGroup GetGroup(string id)
+        public Group GetGroup(int id)
         {
             return _valueProvider.GetValue(id);
         }
 
         [HttpPost]
-        public HttpResponseMessage CreateGroup(TaskGroup group)
+        public HttpResponseMessage CreateGroup(Group group)
         {
             if (ModelState.IsValid)
             {
@@ -49,7 +42,7 @@ namespace ToDoWebAPI.Controllers
         }
 
         [HttpPut]
-        public HttpResponseMessage UpdateGroup(TaskGroup item)
+        public HttpResponseMessage UpdateGroup(Group item)
         {
             if (ModelState.IsValid)
             {
@@ -62,7 +55,7 @@ namespace ToDoWebAPI.Controllers
             }
         }
 
-        public HttpResponseMessage DeleteGroup(string id)
+        public HttpResponseMessage DeleteGroup(int id)
         {
             _valueProvider.DeleteValue(id);
             return new HttpResponseMessage(HttpStatusCode.OK);
