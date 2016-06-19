@@ -4,9 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ToDoWebAPI.Abstract;
-using HomeAccountingSystem_DAL.Abstract;
 using ToDoDAL.Model;
-using Task = ToDoDAL.Model.MongoModel.Task;
 
 namespace ToDoWebAPI.Controllers
 {
@@ -19,9 +17,9 @@ namespace ToDoWebAPI.Controllers
             _valueProvider = valueProvider;
         }
 
-        public IEnumerable<ToDoList> GetToDoList(string userId)
+        public IEnumerable<ToDoList> GetToDoList()
         {
-            return userId == null ? null : _valueProvider.GetValues().Where(x => x.UserId == userId).ToList();
+            return _valueProvider.GetValues().ToList();
         }
 
         public ToDoList GetToDoList(int id)
@@ -29,7 +27,7 @@ namespace ToDoWebAPI.Controllers
             return _valueProvider.GetValue(id);
         }
 
-        [HttpPost]
+        [System.Web.Http.HttpPost]
         public HttpResponseMessage CreateToDoList(ToDoList item)
         {
             if (ModelState.IsValid)
@@ -43,7 +41,7 @@ namespace ToDoWebAPI.Controllers
             }
         }
 
-        [HttpPut]
+        [System.Web.Http.HttpPut]
         public HttpResponseMessage UpdateToDoList(ToDoList item)
         {
             if (ModelState.IsValid)
