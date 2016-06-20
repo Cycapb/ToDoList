@@ -17,9 +17,9 @@ namespace ToDoWebAPI.Controllers
             _valueProvider = valueProvider;
         }
 
-        public IEnumerable<Group> GetValues(string userId)
+        public IEnumerable<Group> GetValues()
         {
-           return userId == null? null :_valueProvider.GetValues().Where(x => x.UserId == userId).ToList();
+           return _valueProvider.GetValues().ToList();
         }
 
         public Group GetGroup(int id)

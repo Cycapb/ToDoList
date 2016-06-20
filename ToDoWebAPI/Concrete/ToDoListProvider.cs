@@ -23,6 +23,7 @@ namespace ToDoWebAPI.Concrete
                     Comment = x.Comment,
                     Name = x.Name,
                     GroupId = x.GroupId,
+                    GroupName = x.Group.Name,
                     StatusId = x.StatusId,
                     UserId = x.UserId,
                     NoteId = x.NoteId
@@ -44,6 +45,7 @@ namespace ToDoWebAPI.Concrete
                     Comment = item.Comment,
                     Name = item.Name,
                     GroupId = item.GroupId,
+                    GroupName = item.Group.Name,
                     StatusId = item.StatusId,
                     UserId = item.UserId,
                     NoteId = item.NoteId

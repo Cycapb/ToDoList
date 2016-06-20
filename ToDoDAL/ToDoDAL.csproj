@@ -103,7 +103,7 @@
     <Compile Include="Model\MongoModel\Task.cs" />
     <Compile Include="Model\MongoModel\TaskGroup.cs" />
     <Compile Include="Model\Partial\Group.cs" />
-    <Compile Include="Model\Partial\Task.cs" />
+    <Compile Include="Model\Partial\ToDoList.cs" />
     <Compile Include="Model\todoEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

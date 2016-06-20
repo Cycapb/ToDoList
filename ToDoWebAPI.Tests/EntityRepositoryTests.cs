@@ -39,9 +39,9 @@ namespace ToDoWebAPI.Tests
             var mockSet = new Mock<DbSet<ToDoList>>();
             mockSet.Setup(m => m.Find(It.IsAny<object[]>()))
                 .Returns<object[]>(ids => mockSet.Object.FirstOrDefault(x => x.NoteId == (int)ids[0]));
-            mockSet.As<IQueryable<Task>>().Setup(m => m.Provider).Returns(toDoList.Provider);
-            mockSet.As<IQueryable<Task>>().Setup(m => m.Expression).Returns(toDoList.Expression);
-            mockSet.As<IQueryable<Task>>().Setup(m => m.ElementType).Returns(toDoList.ElementType);
+            mockSet.As<IQueryable<ToDoList>>().Setup(m => m.Provider).Returns(toDoList.Provider);
+            mockSet.As<IQueryable<ToDoList>>().Setup(m => m.Expression).Returns(toDoList.Expression);
+            mockSet.As<IQueryable<ToDoList>>().Setup(m => m.ElementType).Returns(toDoList.ElementType);
             mockSet.As<IQueryable<ToDoList>>().Setup(m => m.GetEnumerator()).Returns(() => toDoList.GetEnumerator());
             var mockContext = new Mock<todoEntities>();
             mockContext.Setup(c => c.Set<ToDoList>()).Returns(mockSet.Object);
