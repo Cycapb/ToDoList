@@ -42,7 +42,7 @@ namespace ToDoWebAPI.Controllers
         }
 
         [HttpPut]
-        public HttpResponseMessage UpdateToDoList(ToDoList item)
+        public HttpResponseMessage UpdateToDo(int id, ToDoList item)
         {
             if (ModelState.IsValid)
             {
@@ -62,7 +62,7 @@ namespace ToDoWebAPI.Controllers
         }
 
         [HttpPut]
-        public HttpResponseMessage CompleteToDoList(IEnumerable<ToDoList> items)
+        public HttpResponseMessage UpdateToDoList([FromBody]IEnumerable<ToDoList> items)
         {
             if (items == null)
             {
