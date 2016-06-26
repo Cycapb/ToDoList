@@ -27,7 +27,7 @@ namespace ToDoWebAPI.Controllers
             return _valueProvider.GetValue(id);
         }
 
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public HttpResponseMessage CreateToDoList(ToDoList item)
         {
             if (ModelState.IsValid)
@@ -41,7 +41,7 @@ namespace ToDoWebAPI.Controllers
             }
         }
 
-        [System.Web.Http.HttpPut]
+        [HttpPut]
         public HttpResponseMessage UpdateToDoList(ToDoList item)
         {
             if (ModelState.IsValid)
@@ -59,6 +59,20 @@ namespace ToDoWebAPI.Controllers
         {
            _valueProvider.DeleteValue(id);
             return new HttpResponseMessage(HttpStatusCode.OK);
+        }
+
+        [HttpPut]
+        public HttpResponseMessage CompleteToDoList(IEnumerable<ToDoList> items)
+        {
+            if (items == null)
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
+            else
+            {
+                _valueProvider.UpdateValues(items);
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            } 
         }
     }
 }

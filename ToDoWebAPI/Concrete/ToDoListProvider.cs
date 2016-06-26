@@ -65,6 +65,15 @@ namespace ToDoWebAPI.Concrete
             _repository.Save();
         }
 
+        public void UpdateValues(IEnumerable<ToDoList> items)
+        {
+            foreach (var item in items)
+            {
+                _repository.Update(item);
+                _repository.Save();
+            }
+        }
+
         public void DeleteValue(int id)
         {
             _repository.Delete(id);

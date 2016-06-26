@@ -8,6 +8,7 @@ namespace ToDoWebAPI.Abstract
         T GetValue(int id);
         void CreateValue(T item);
         void UpdateValue(T item);
+        void UpdateValues(IEnumerable<T> items);
         void DeleteValue(int id);
     }
 }
