@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using ToDoWebAPI.Infrastructure;
 
 namespace ToDoWebAPI
 {
@@ -6,6 +7,8 @@ namespace ToDoWebAPI
     {
         public static void Register(HttpConfiguration config)
         {
+            config.Filters.Add(new CustomErrorAttribute());
+
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(

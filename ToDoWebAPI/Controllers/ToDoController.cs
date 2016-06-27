@@ -2,7 +2,9 @@
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
+using NLog;
 using ToDoWebAPI.Abstract;
 using ToDoDAL.Model;
 
@@ -10,6 +12,7 @@ namespace ToDoWebAPI.Controllers
 {
     public class ToDoController : ApiController
     {
+        private static Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IEntityValueProvider<ToDoList> _valueProvider;
 
         public ToDoController(IEntityValueProvider<ToDoList> valueProvider)
@@ -37,6 +40,7 @@ namespace ToDoWebAPI.Controllers
             }
             else
             {
+                Logger.Warn($"User tried to create null ToDo item data from ip: {HttpContext.Current.Request.UserHostAddress}");
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest,ModelState);
             }
         }
@@ -51,6 +55,7 @@ namespace ToDoWebAPI.Controllers
             }
             else
             {
+                Logger.Warn($"User tried to update data from ip: {HttpContext.Current.Request.UserHostAddress}");
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
         }
@@ -66,6 +71,7 @@ namespace ToDoWebAPI.Controllers
         {
             if (items == null)
             {
+                Logger.Warn($"User tried to update data from ip: {HttpContext.Current.Request.UserHostAddress}");
                 return new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
             else
