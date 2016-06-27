@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -57,8 +58,16 @@ namespace ToDoWebAPI.Controllers
 
         public HttpResponseMessage DeleteGroup(int id)
         {
-            _valueProvider.DeleteValue(id);
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            try
+            {
+                _valueProvider.DeleteValue(id);
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            catch (Exception)
+            {
+                var message = "You cannot delete group while it has any ToDo items";
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest,message);
+            }
         }
     }
 }
