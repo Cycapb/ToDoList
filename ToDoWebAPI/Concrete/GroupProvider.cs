@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ToDoDAL.Abstract;
 using ToDoDAL.Model;
 using ToDoWebAPI.Abstract;
@@ -15,21 +16,20 @@ namespace ToDoWebAPI.Concrete
             _repository = repository;
         }
 
-        public IEnumerable<Group> GetValues()
+        public async Task<IEnumerable<Group>> GetValuesAsync()
         {
-            return _repository.GetList()
-                .Select(x=> new Group()
+            return (await _repository.GetListAsync())
+                .Select(x => new Group()
                 {
                     GroupId = x.GroupId,
                     Name = x.Name,
                     UserId = x.UserId
                 });
-
         }
 
-        public Group GetValue(int id)
+        public async Task<Group> GetValueAsync(int id)
         {
-            var item = _repository.GetItem(id);
+            var item = await _repository.GetItemAsync(id);
             if (item == null)
             {
                 return null;
@@ -45,27 +45,31 @@ namespace ToDoWebAPI.Concrete
             }
         }
 
-        public void CreateValue(Group item)
+        public async Task CreateValueAsync(Group item)
         {
-            _repository.Create(item);
-            _repository.Save();
+            await _repository.CreateAsync(item);
+            await _repository.SaveAsync();
         }
 
-        public void UpdateValue(Group item)
+        public async Task UpdateValueAsync(Group item)
         {
-            _repository.Update(item);
-            _repository.Save();
+            await _repository.UpdateAsync(item);
+            await _repository.SaveAsync();
         }
 
-        public void UpdateValues(IEnumerable<Group> items)
+        public async Task UpdateValuesAsync(IEnumerable<Group> items)
         {
-            
+            foreach (var group in items)
+            {
+                await _repository.UpdateAsync(group);
+            }
+            await _repository.SaveAsync();
         }
 
-        public void DeleteValue(int id)
+        public async Task DeleteValueAsync(int id)
         {
-            _repository.Delete(id);
-            _repository.Save();
+            await _repository.DeleteAsync(id);
+            await _repository.DeleteAsync(id);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using NLog;
@@ -20,22 +21,22 @@ namespace ToDoWebAPI.Controllers
             _valueProvider = valueProvider;
         }
 
-        public IEnumerable<ToDoList> GetToDoList()
+        public async Task<IEnumerable<ToDoList>> GetToDoList()
         {
-            return _valueProvider.GetValues().ToList();
+            return (await _valueProvider.GetValuesAsync()).ToList();
         }
 
-        public ToDoList GetToDoList(int id)
+        public async Task<ToDoList> GetToDoList(int id)
         {
-            return _valueProvider.GetValue(id);
+            return await _valueProvider.GetValueAsync(id);
         }
 
         [HttpPost]
-        public HttpResponseMessage CreateToDoList(ToDoList item)
+        public async Task<HttpResponseMessage> CreateToDoList(ToDoList item)
         {
             if (ModelState.IsValid)
             {
-                _valueProvider.CreateValue(item);
+                await _valueProvider.CreateValueAsync(item);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
             else
@@ -46,11 +47,11 @@ namespace ToDoWebAPI.Controllers
         }
 
         [HttpPut]
-        public HttpResponseMessage UpdateToDo(int id, ToDoList item)
+        public async Task<HttpResponseMessage> UpdateToDo(int id, ToDoList item)
         {
             if (ModelState.IsValid)
             {
-                _valueProvider.UpdateValue(item);
+                await _valueProvider.UpdateValueAsync(item);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
             else
@@ -60,14 +61,14 @@ namespace ToDoWebAPI.Controllers
             }
         }
 
-        public HttpResponseMessage DeleteToDoList(int id)
+        public async Task<HttpResponseMessage> DeleteToDoList(int id)
         {
-           _valueProvider.DeleteValue(id);
+            await _valueProvider.DeleteValueAsync(id);
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         [HttpPut]
-        public HttpResponseMessage UpdateToDoList([FromBody]IEnumerable<ToDoList> items)
+        public async Task<HttpResponseMessage> UpdateToDoList([FromBody]IEnumerable<ToDoList> items)
         {
             if (items == null)
             {
@@ -76,7 +77,7 @@ namespace ToDoWebAPI.Controllers
             }
             else
             {
-                _valueProvider.UpdateValues(items);
+                await _valueProvider.UpdateValuesAsync(items);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             } 
         }

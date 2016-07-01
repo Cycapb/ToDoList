@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using ToDoDAL.Model;
 using ToDoWebAPI.Abstract;
@@ -18,22 +19,22 @@ namespace ToDoWebAPI.Controllers
             _valueProvider = valueProvider;
         }
 
-        public IEnumerable<Group> GetValues()
+        public async Task<IEnumerable<Group>> GetValues()
         {
-           return _valueProvider.GetValues().ToList();
+           return (await _valueProvider.GetValuesAsync()).ToList();
         }
 
-        public Group GetGroup(int id)
+        public async Task<Group> GetGroup(int id)
         {
-            return _valueProvider.GetValue(id);
+            return await _valueProvider.GetValueAsync(id);
         }
 
         [HttpPost]
-        public HttpResponseMessage CreateGroup(Group group)
+        public async Task<HttpResponseMessage> CreateGroup(Group group)
         {
             if (ModelState.IsValid)
             {
-                _valueProvider.CreateValue(group);
+                await _valueProvider.CreateValueAsync(group);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
             else
@@ -43,11 +44,11 @@ namespace ToDoWebAPI.Controllers
         }
 
         [HttpPut]
-        public HttpResponseMessage UpdateGroup(Group item)
+        public async Task<HttpResponseMessage> UpdateGroup(Group item)
         {
             if (ModelState.IsValid)
             {
-                _valueProvider.UpdateValue(item);
+                await _valueProvider.UpdateValueAsync(item);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
             else
@@ -56,11 +57,11 @@ namespace ToDoWebAPI.Controllers
             }
         }
 
-        public HttpResponseMessage DeleteGroup(int id)
+        public async Task<HttpResponseMessage> DeleteGroup(int id)
         {
             try
             {
-                _valueProvider.DeleteValue(id);
+                await _valueProvider.DeleteValueAsync(id);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
             catch (Exception)

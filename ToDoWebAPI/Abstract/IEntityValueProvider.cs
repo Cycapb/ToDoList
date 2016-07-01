@@ -1,14 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ToDoWebAPI.Abstract
 {
     public interface IEntityValueProvider<T> where T:class
     {
-        IEnumerable<T> GetValues();
-        T GetValue(int id);
-        void CreateValue(T item);
-        void UpdateValue(T item);
-        void UpdateValues(IEnumerable<T> items);
-        void DeleteValue(int id);
+
+        Task<IEnumerable<T>> GetValuesAsync();
+        Task<T> GetValueAsync(int id);
+        Task CreateValueAsync(T item);
+        Task UpdateValueAsync(T item);
+        Task UpdateValuesAsync(IEnumerable<T> items);
+        Task DeleteValueAsync(int id);
     }
 }
