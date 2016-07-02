@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ToDoDAL.Model;
@@ -59,6 +60,7 @@ namespace ToDoWebAPI.Tests
             var mockSet = new Mock<DbSet<Group>>();
             mockSet.Setup(m => m.Find(It.IsAny<object[]>()))
                 .Returns<object[]>(ids => mockSet.Object.FirstOrDefault(x=>x.GroupId == (int)ids[0]));
+            mockSet.Setup(m => m.Find(It.IsAny<object[]>())).Returns<object[]>(ids => mockSet.Object.FirstOrDefault(x => x.GroupId == (int)ids[0]));
             mockSet.As<IQueryable<Group>>().Setup(m => m.Provider).Returns(groupList.Provider);
             mockSet.As<IQueryable<Group>>().Setup(m => m.Expression).Returns(groupList.Expression);
             mockSet.As<IQueryable<Group>>().Setup(m => m.ElementType).Returns(groupList.ElementType);
@@ -74,13 +76,13 @@ namespace ToDoWebAPI.Tests
         }
 
         [TestMethod]
-        public void GetListReturnsList()
+        public async Task GetListAsyncReturnsList()
         {
             var repoTodo = CreateToDoMockClass();
             var repoGroup = CreateGroupMockClass();
 
-            var targetToDo = repoTodo.MockRepository.GetList().ToList();
-            var targetGroup = repoGroup.MockRepository.GetList().ToList();
+            var targetToDo = (await repoTodo.MockRepository.GetListAsync()).ToList();
+            var targetGroup = (await repoGroup.MockRepository.GetListAsync()).ToList();
 
             Assert.AreEqual(targetToDo[1].NoteId,2);
             Assert.AreEqual(targetToDo[1].Name,"N2");
@@ -89,15 +91,15 @@ namespace ToDoWebAPI.Tests
         }
 
         [TestMethod]
-        public void GetItemReturnToDoOrGroupItem()
+        public async Task GetItemAsyncReturnToDoOrGroupItem()
         {
             var repoTodo = CreateToDoMockClass();
             var repoGroup = CreateGroupMockClass();
             var itemId = 2;
 
-            var targetToDo = repoTodo.MockRepository.GetItem(itemId);
-            var targetGroup = repoGroup.MockRepository.GetItem(itemId);
-            var targetToDoNull = repoTodo.MockRepository.GetItem(56);
+            var targetToDo = await repoTodo.MockRepository.GetItemAsync(itemId);
+            var targetGroup = await repoGroup.MockRepository.GetItemAsync(itemId);
+            var targetToDoNull = await repoTodo.MockRepository.GetItemAsync(56);
 
             Assert.IsNull(targetToDoNull);
             Assert.AreEqual(targetToDo.Name,"N2");
@@ -105,29 +107,29 @@ namespace ToDoWebAPI.Tests
         }
 
         [TestMethod]
-        public void CreateToDoList()
+        public async Task CreateToDoList()
         {
             var mockClass = CreateToDoMockClass();
             var newTodoList = new ToDoList() {NoteId = 5,Name = "N5"};
             
             
-            mockClass.MockRepository.Create(newTodoList);
+            await mockClass.MockRepository.CreateAsync(newTodoList);
             mockClass.MockDbSet.Verify(m=>m.Add(newTodoList),Times.Once);
         }
 
         [TestMethod]
-        public void DeleteToDoList()
+        public async Task DeleteAsyncToDoList()
         {
             var mockClass = CreateToDoMockClass();
             var itemId = 2;
 
-            mockClass.MockRepository.Delete(itemId);
+            await mockClass.MockRepository.DeleteAsync(itemId);
 
             mockClass.MockDbSet.Verify(m=>m.Remove(It.IsAny<ToDoList>()),Times.Once);
         }
 
         [TestMethod]
-        public void UpdateToDoList()
+        public async Task UpdateAsyncToDoList()
         {
             var toDoList = _toDoList.AsQueryable();
             var mockSet = new Mock<DbSet<ToDoList>>();
@@ -141,26 +143,26 @@ namespace ToDoWebAPI.Tests
             mockContext.Setup(c => c.Set<ToDoList>()).Returns(mockSet.Object);
             var itemId = 2;
             Mock<EntityRepositoryFake<ToDoList>> mockRepo = new Mock<EntityRepositoryFake<ToDoList>>(mockContext.Object);
-            mockRepo.Setup(m => m.UpdateItem(It.IsAny<ToDoList>()));
-            mockRepo.Setup(m => m.GetItem(It.IsAny<int>())).Returns(mockSet.Object.Find(itemId));
+            mockRepo.Setup(m => m.UpdateAsync(It.IsAny<ToDoList>()));
+            mockRepo.Setup(m => m.GetItemAsync(It.IsAny<int>())).Returns(mockSet.Object.FindAsync(itemId));
 
-            var newTodo = mockRepo.Object.GetItem(itemId);
+            var newTodo = await mockRepo.Object.GetItemAsync(itemId);
             newTodo.Name = "N22";
-            mockRepo.Object.Update(newTodo);
-            var updatedItem = mockRepo.Object.GetItem(itemId);
+            await mockRepo.Object.UpdateAsync(newTodo);
+            var updatedItem = await mockRepo.Object.GetItemAsync(itemId);
 
-            mockRepo.Verify(m=>m.Update(newTodo),Times.Once);
+            mockRepo.Verify(m=>m.UpdateAsync(newTodo),Times.Once);
             
             Assert.AreEqual(updatedItem.Name,"N22");
         }
 
         [TestMethod]
-        public void SaveToDoList()
+        public async Task SaveAsyncToDoList()
         {
             var mockClass = CreateToDoMockClass();    
-            mockClass.MockRepository.Save();
+            await mockClass.MockRepository.SaveAsync();
 
-            mockClass.MockContext.Verify(m=>m.SaveChanges(),Times.Once);
+            mockClass.MockContext.Verify(m=>m.SaveChangesAsync(),Times.Once);
         }
     }
 }

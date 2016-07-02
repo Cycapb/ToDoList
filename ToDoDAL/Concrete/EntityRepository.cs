@@ -39,12 +39,7 @@ namespace ToDoDAL.Concrete
             this._disposed = true;
         }
 
-        public virtual IEnumerable<T> GetList()
-        {
-            return _dbSet;
-        }
-
-        public Task<IEnumerable<T>> GetListAsync()
+        public virtual Task<IEnumerable<T>> GetListAsync()
         {
             return Task.Run(() =>
             {
@@ -53,36 +48,17 @@ namespace ToDoDAL.Concrete
             });
         }
 
-        public virtual T GetItem(int id)
-        {
-            return _dbSet.Find(id);
-        }
-
-        public async Task<T> GetItemAsync(int id)
+        public virtual async Task<T> GetItemAsync(int id)
         {
             return await _dbSet.FindAsync(id);
         }
 
-        public virtual void Create(T item)
-        {
-            _dbSet.Add(item);
-        }
-
-        public Task CreateAsync(T item)
+        public virtual Task CreateAsync(T item)
         {
             return Task.Run(()=>_dbSet.Add(item));
         }
 
-        public virtual void Delete(int id)
-        {
-            var itemToDel = _dbSet.Find(id);
-            if (itemToDel != null)
-            {
-                _dbSet.Remove(itemToDel);
-            }
-        }
-
-        public Task DeleteAsync(int id)
+        public virtual Task DeleteAsync(int id)
         {
             return Task.Run(async () =>
             {
@@ -94,12 +70,7 @@ namespace ToDoDAL.Concrete
             });
         }
 
-        public virtual void Update(T item)
-        {
-            _context.Entry(item).State = EntityState.Modified;
-        }
-
-        public Task UpdateAsync(T item)
+        public virtual Task UpdateAsync(T item)
         {
             return Task.Run(() =>
             {
@@ -107,12 +78,7 @@ namespace ToDoDAL.Concrete
             });
         }
 
-        public virtual void Save()
-        {
-            _context.SaveChanges();
-        }
-
-        public async Task SaveAsync()
+        public virtual async Task SaveAsync()
         {
             await _context.SaveChangesAsync();
         }

@@ -2,6 +2,7 @@
 using ToDoDAL.Concrete;
 using ToDoDAL.Model;
 using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace ToDoWebAPI.Tests
 {
@@ -18,43 +19,51 @@ namespace ToDoWebAPI.Tests
             _dbSet = _context.Set<T>();
         }
 
-        public override IEnumerable<T> GetList()
-        {
-            return _dbSet;
-        }
-
-        public override T GetItem(int id)
-        {
-            return _dbSet.Find(id);
-        }
-
-        public override void Create(T item)
-        {
-            _dbSet.Add(item);
-        }
-
-        public override void Delete(int id)
-        {
-            T item = this.GetItem(id);
-            if (item != null)
-            {
-                _dbSet.Remove(item);
-            }
-        }
-
-        public override void Update(T item)
-        {
-            UpdateItem(item);
-        }
-
-        public override void Save()
-        {
-            _context.SaveChanges();
-        }
-
         public virtual void UpdateItem(T item)
         {
             _context.Entry(item).State = EntityState.Modified;
+        }
+
+        public override Task<IEnumerable<T>> GetListAsync()
+        {
+            return Task.Run(() =>
+            {
+                IEnumerable<T> list = _dbSet;
+                return list;
+            });
+        }
+
+        public override Task<T> GetItemAsync(int id)
+        {
+            return Task.Run(() => _dbSet.Find(id));
+        }
+
+        public override async Task SaveAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
+
+        public override Task UpdateAsync(T item)
+        {
+            UpdateItem(item);
+            return Task.Run(() => item);
+        }
+
+        public override Task CreateAsync(T item)
+        {
+            return Task.Run(() => _dbSet.Add(item));
+        }
+
+        public override Task DeleteAsync(int id)
+        {
+            return Task.Run(() =>
+            {
+                var item = _dbSet.Find(id);
+                if (item != null)
+                {
+                    _dbSet.Remove(item);
+                }
+            });
         }
     }
 }
