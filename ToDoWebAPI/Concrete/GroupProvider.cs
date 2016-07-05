@@ -69,7 +69,7 @@ namespace ToDoWebAPI.Concrete
         public async Task DeleteValueAsync(int id)
         {
             await _repository.DeleteAsync(id);
-            await _repository.DeleteAsync(id);
+            await _repository.SaveAsync();
         }
     }
 }
