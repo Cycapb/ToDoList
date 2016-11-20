@@ -1,53 +1,43 @@
-﻿using System.Data.Entity;
-
 namespace ToDoDAL.Model
 {
-    public class TodoContext:DbContext
+    using System.Data.Entity;
+
+    public partial class TodoContext : DbContext
     {
-        public TodoContext():base("name=todoEntities")
+        public TodoContext()
+            : base("name=TodoEntities")
         {
-            
         }
 
-        public DbSet<ToDoList> ToDoList { get; set; }
-        public DbSet<Group> Group { get; set; }
+        public virtual DbSet<Group> Group { get; set; }
+        public virtual DbSet<ToDoList> ToDoList { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Group>()
-                .HasKey(s => s.GroupId);
+                .Property(e => e.Name)
+                .IsUnicode(false);
 
             modelBuilder.Entity<Group>()
-                .Property(s => s.Name)
-                .IsRequired()
-                .HasMaxLength(50);
+                .Property(e => e.UserId)
+                .IsUnicode(false);
 
             modelBuilder.Entity<Group>()
-                .Property(s => s.UserId)
-                .IsRequired();
-
-            modelBuilder.Entity<Group>()
-                .HasMany<ToDoList>(s => s.ToDoList)
-                .WithRequired(s => s.Group);
+                .HasMany(e => e.ToDoList)
+                .WithRequired(e => e.Group)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ToDoList>()
-                .HasKey(s => s.NoteId);
+                .Property(e => e.Name)
+                .IsUnicode(false);
 
             modelBuilder.Entity<ToDoList>()
-                .Property(p => p.Name)
-                .IsRequired()
-                .HasMaxLength(50);
+                .Property(e => e.Comment)
+                .IsUnicode(false);
 
             modelBuilder.Entity<ToDoList>()
-                .Property(p => p.Comment)
-                .IsOptional();
-
-            modelBuilder.Entity<ToDoList>()
-                .Property(p => p.StatusId)
-                .IsRequired();
-            modelBuilder.Entity<ToDoList>()
-                .Property(p => p.UserId)
-                .IsRequired();
+                .Property(e => e.UserId)
+                .IsUnicode(false);
         }
     }
 }
