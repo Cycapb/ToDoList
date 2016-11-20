@@ -16,11 +16,37 @@ namespace ToDoDAL.Model
         {
             modelBuilder.Entity<Group>()
                 .HasKey(s => s.GroupId);
+
             modelBuilder.Entity<Group>()
                 .Property(s => s.Name)
+                .IsRequired()
                 .HasMaxLength(50);
+
             modelBuilder.Entity<Group>()
                 .Property(s => s.UserId)
+                .IsRequired();
+
+            modelBuilder.Entity<Group>()
+                .HasMany<ToDoList>(s => s.ToDoList)
+                .WithRequired(s => s.Group);
+
+            modelBuilder.Entity<ToDoList>()
+                .HasKey(s => s.NoteId);
+
+            modelBuilder.Entity<ToDoList>()
+                .Property(p => p.Name)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            modelBuilder.Entity<ToDoList>()
+                .Property(p => p.Comment)
+                .IsOptional();
+
+            modelBuilder.Entity<ToDoList>()
+                .Property(p => p.StatusId)
+                .IsRequired();
+            modelBuilder.Entity<ToDoList>()
+                .Property(p => p.UserId)
                 .IsRequired();
         }
     }

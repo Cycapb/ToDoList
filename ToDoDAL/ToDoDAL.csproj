@@ -103,6 +103,7 @@
     <Compile Include="Model\Partial\Group.cs" />
     <Compile Include="Model\Partial\ToDoList.cs" />
     <Compile Include="Model\TodoContext.cs" />
+    <Compile Include="Model\ToDoList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

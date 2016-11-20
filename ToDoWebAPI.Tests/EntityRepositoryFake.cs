@@ -8,12 +8,12 @@ namespace ToDoWebAPI.Tests
 {
     public class EntityRepositoryFake<T>:EntityRepository<T> where T:class 
     {
-        private todoEntities _context;
+        private TodoContext _context;
         private DbSet<T> _dbSet;
 
         public EntityRepositoryFake() { }
 
-        public EntityRepositoryFake(todoEntities context )  
+        public EntityRepositoryFake(TodoContext context )  
         {
             _context = context;
             _dbSet = _context.Set<T>();
