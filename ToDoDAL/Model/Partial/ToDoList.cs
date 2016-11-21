@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Mvc;
 
 namespace ToDoDAL.Model
@@ -7,8 +6,7 @@ namespace ToDoDAL.Model
     [MetadataType(typeof(ToDoListMetadata))]
     public partial class ToDoList
     {
-        [NotMapped]
-        public string GroupName { get; set; }
+        
     }
 
     public class ToDoListMetadata
