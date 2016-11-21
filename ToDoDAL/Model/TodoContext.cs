@@ -7,7 +7,7 @@ namespace ToDoDAL.Model
         public TodoContext()
             : base("name=TodoEntities")
         {
-            Database.SetInitializer<TodoContext>(new CreateDatabaseIfNotExists<TodoContext>());
+            Database.SetInitializer<TodoContext>(new MigrateDatabaseToLatestVersion<TodoContext,Migrations.Configuration>("TodoEntities"));
         }
 
         
