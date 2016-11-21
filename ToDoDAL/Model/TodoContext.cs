@@ -7,10 +7,7 @@ namespace ToDoDAL.Model
         public TodoContext()
             : base("name=TodoEntities")
         {
-<<<<<<< HEAD
             Database.SetInitializer<TodoContext>(new MigrateDatabaseToLatestVersion<TodoContext,Migrations.Configuration>("TodoEntities"));
-=======
->>>>>>> parent of e7abe48... Added Db Initializer
         }
 
         public virtual DbSet<Group> Group { get; set; }
