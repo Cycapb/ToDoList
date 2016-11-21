@@ -1,3 +1,5 @@
+using System;
+
 namespace ToDoDAL.Model
 {
     using System.ComponentModel.DataAnnotations;
@@ -23,6 +25,7 @@ namespace ToDoDAL.Model
         [Required]
         public string UserId { get; set; }
 
+        public DateTime CreationDate { get; set; }
         public virtual Group Group { get; set; }
     }
 }

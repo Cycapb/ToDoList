@@ -105,6 +105,10 @@
     <Compile Include="Migrations\201611211201234_AddGroupName.Designer.cs">
       <DependentUpon>201611211201234_AddGroupName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611211212299_AddCreationDate.cs" />
+    <Compile Include="Migrations\201611211212299_AddCreationDate.Designer.cs">
+      <DependentUpon>201611211212299_AddCreationDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\MongoModel\Task.cs" />
@@ -128,6 +132,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611211201234_AddGroupName.resx">
       <DependentUpon>201611211201234_AddGroupName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611211212299_AddCreationDate.resx">
+      <DependentUpon>201611211212299_AddCreationDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
