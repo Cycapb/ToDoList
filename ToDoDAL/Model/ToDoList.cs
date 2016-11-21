@@ -27,7 +27,5 @@ namespace ToDoDAL.Model
         public string UserId { get; set; }
 
         public virtual Group Group { get; set; }
-
-        public virtual Group Group1 { get; set; }
     }
 }
