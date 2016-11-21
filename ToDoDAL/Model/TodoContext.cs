@@ -7,8 +7,10 @@ namespace ToDoDAL.Model
         public TodoContext()
             : base("name=TodoEntities")
         {
+            Database.SetInitializer<TodoContext>(new CreateDatabaseIfNotExists<TodoContext>());
         }
 
+        
         public virtual DbSet<Group> Group { get; set; }
         public virtual DbSet<ToDoList> ToDoList { get; set; }
 
