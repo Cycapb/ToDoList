@@ -7,7 +7,7 @@ namespace ToDoDAL.Model
         public TodoContext()
             : base("name=TodoEntities")
         {
-            
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<TodoContext,Migrations.Configuration>("TodoEntities"));
         }
 
         public virtual DbSet<Group> Group { get; set; }
