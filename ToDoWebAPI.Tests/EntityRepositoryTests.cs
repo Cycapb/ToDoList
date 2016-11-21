@@ -12,7 +12,7 @@ namespace ToDoWebAPI.Tests
     {
         public EntityRepositoryFake<T> MockRepository;
         public Mock<DbSet<T>> MockDbSet;
-        public Mock<todoEntities> MockContext;
+        public Mock<TodoContext> MockContext;
     }
 
     [TestClass]
@@ -44,7 +44,7 @@ namespace ToDoWebAPI.Tests
             mockSet.As<IQueryable<ToDoList>>().Setup(m => m.Expression).Returns(toDoList.Expression);
             mockSet.As<IQueryable<ToDoList>>().Setup(m => m.ElementType).Returns(toDoList.ElementType);
             mockSet.As<IQueryable<ToDoList>>().Setup(m => m.GetEnumerator()).Returns(() => toDoList.GetEnumerator());
-            var mockContext = new Mock<todoEntities>();
+            var mockContext = new Mock<TodoContext>();
             mockContext.Setup(c => c.Set<ToDoList>()).Returns(mockSet.Object);
             return  new MockClass<ToDoList>()
             {
@@ -65,7 +65,7 @@ namespace ToDoWebAPI.Tests
             mockSet.As<IQueryable<Group>>().Setup(m => m.Expression).Returns(groupList.Expression);
             mockSet.As<IQueryable<Group>>().Setup(m => m.ElementType).Returns(groupList.ElementType);
             mockSet.As<IQueryable<Group>>().Setup(m => m.GetEnumerator()).Returns(() => groupList.GetEnumerator());
-            var mockContext = new Mock<todoEntities>();
+            var mockContext = new Mock<TodoContext>();
             mockContext.Setup(c => c.Set<Group>()).Returns(mockSet.Object);
             return new MockClass<Group>()
             {
@@ -139,7 +139,7 @@ namespace ToDoWebAPI.Tests
             mockSet.As<IQueryable<ToDoList>>().Setup(m => m.Expression).Returns(toDoList.Expression);
             mockSet.As<IQueryable<ToDoList>>().Setup(m => m.ElementType).Returns(toDoList.ElementType);
             mockSet.As<IQueryable<ToDoList>>().Setup(m => m.GetEnumerator()).Returns(() => toDoList.GetEnumerator());
-            var mockContext = new Mock<todoEntities>();
+            var mockContext = new Mock<TodoContext>();
             mockContext.Setup(c => c.Set<ToDoList>()).Returns(mockSet.Object);
             var itemId = 2;
             Mock<EntityRepositoryFake<ToDoList>> mockRepo = new Mock<EntityRepositoryFake<ToDoList>>(mockContext.Object);

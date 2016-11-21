@@ -10,14 +10,14 @@ namespace ToDoDAL.Concrete
 {
     public class EntityRepository<T>:IRepository<T> where T:class
     {
-        private readonly todoEntities _context;
+        private readonly TodoContext _context;
         private readonly DbSet<T> _dbSet;
 
         private bool _disposed = false;
         
         public EntityRepository()
         {
-            _context = new todoEntities();
+            _context = new TodoContext();
             _dbSet = _context.Set<T>();
         }
 
