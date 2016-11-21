@@ -6,7 +6,7 @@ namespace ToDoDAL.Model
     [MetadataType(typeof(ToDoListMetadata))]
     public partial class ToDoList
     {
-        public string GroupName { get; set; }
+        
     }
 
     public class ToDoListMetadata
