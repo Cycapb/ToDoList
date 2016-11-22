@@ -109,6 +109,10 @@
     <Compile Include="Migrations\201611211212299_AddCreationDate.Designer.cs">
       <DependentUpon>201611211212299_AddCreationDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611220418440_DelCreationDate.cs" />
+    <Compile Include="Migrations\201611220418440_DelCreationDate.Designer.cs">
+      <DependentUpon>201611220418440_DelCreationDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\MongoModel\Task.cs" />
@@ -135,6 +139,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611211212299_AddCreationDate.resx">
       <DependentUpon>201611211212299_AddCreationDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611220418440_DelCreationDate.resx">
+      <DependentUpon>201611220418440_DelCreationDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
