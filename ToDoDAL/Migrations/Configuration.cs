@@ -7,6 +7,7 @@ namespace ToDoDAL.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            ContextKey = "ToDoDaL.Model.TodoContext";
         }
 
         protected override void Seed(ToDoDAL.Model.TodoContext context)
