@@ -221,7 +221,6 @@
     <Compile Include="Concrete\MongoTaskValueProvider.cs" />
     <Compile Include="Concrete\ToDoListProvider.cs" />
     <Compile Include="Controllers\GroupController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ToDoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
