@@ -97,21 +97,9 @@
     <Compile Include="Concrete\Entity.cs" />
     <Compile Include="Concrete\EntityRepository.cs" />
     <Compile Include="Concrete\MongoRepository.cs" />
-    <Compile Include="Migrations\201611211140419_InitialCreate.cs" />
-    <Compile Include="Migrations\201611211140419_InitialCreate.Designer.cs">
-      <DependentUpon>201611211140419_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611211201234_AddGroupName.cs" />
-    <Compile Include="Migrations\201611211201234_AddGroupName.Designer.cs">
-      <DependentUpon>201611211201234_AddGroupName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611211212299_AddCreationDate.cs" />
-    <Compile Include="Migrations\201611211212299_AddCreationDate.Designer.cs">
-      <DependentUpon>201611211212299_AddCreationDate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611220418440_DelCreationDate.cs" />
-    <Compile Include="Migrations\201611220418440_DelCreationDate.Designer.cs">
-      <DependentUpon>201611220418440_DelCreationDate.cs</DependentUpon>
+    <Compile Include="Migrations\201611291155488_CreateDatabase.cs" />
+    <Compile Include="Migrations\201611291155488_CreateDatabase.Designer.cs">
+      <DependentUpon>201611291155488_CreateDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Group.cs" />
@@ -131,17 +119,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611211140419_InitialCreate.resx">
-      <DependentUpon>201611211140419_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611211201234_AddGroupName.resx">
-      <DependentUpon>201611211201234_AddGroupName.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611211212299_AddCreationDate.resx">
-      <DependentUpon>201611211212299_AddCreationDate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611220418440_DelCreationDate.resx">
-      <DependentUpon>201611220418440_DelCreationDate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201611291155488_CreateDatabase.resx">
+      <DependentUpon>201611291155488_CreateDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
