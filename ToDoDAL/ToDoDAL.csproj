@@ -101,6 +101,10 @@
     <Compile Include="Migrations\201611291855162_InitDatabase.Designer.cs">
       <DependentUpon>201611291855162_InitDatabase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611300453079_DelDate.cs" />
+    <Compile Include="Migrations\201611300453079_DelDate.Designer.cs">
+      <DependentUpon>201611300453079_DelDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\MongoModel\Task.cs" />
@@ -121,6 +125,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201611291855162_InitDatabase.resx">
       <DependentUpon>201611291855162_InitDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611300453079_DelDate.resx">
+      <DependentUpon>201611300453079_DelDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
