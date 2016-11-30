@@ -85,9 +85,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="EntityRepositoryFake.cs" />
     <Compile Include="EntityRepositoryTests.cs" />
-    <Compile Include="GroupControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ToDoListControllerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ToDoDAL\ToDoDAL.csproj">
