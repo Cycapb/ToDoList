@@ -21,11 +21,6 @@ namespace ToDoWebAPI.Controllers
             _valueProvider = valueProvider;
         }
 
-        public async Task<IEnumerable<ToDoList>> GetToDoList()
-        {
-            return (await _valueProvider.GetValuesAsync()).ToList();
-        }
-
         public async Task<ToDoList> GetToDoList(int id)
         {
             return await _valueProvider.GetValueAsync(id);

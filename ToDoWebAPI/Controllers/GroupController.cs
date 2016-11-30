@@ -19,14 +19,14 @@ namespace ToDoWebAPI.Controllers
             _valueProvider = valueProvider;
         }
 
-        public async Task<IEnumerable<Group>> GetValues()
-        {
-           return (await _valueProvider.GetValuesAsync()).ToList();
-        }
-
         public async Task<Group> GetGroup(int id)
         {
             return await _valueProvider.GetValueAsync(id);
+        }
+
+        public async Task<IEnumerable<Group>> GetValues(string userId)
+        {
+            return (await _valueProvider.GetValuesAsync()).Where(x => x.UserId == userId).ToList();
         }
 
         [HttpPost]
