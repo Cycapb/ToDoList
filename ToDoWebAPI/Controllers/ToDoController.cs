@@ -31,6 +31,11 @@ namespace ToDoWebAPI.Controllers
             return await _valueProvider.GetValueAsync(id);
         }
 
+        public async Task<IEnumerable<ToDoList>> GetTodoByUser(string userId)
+        {
+            return (await _valueProvider.GetValuesAsync()).Where(x => x.UserId == userId).ToList();
+        }
+
         [HttpPost]
         public async Task<HttpResponseMessage> CreateToDoList(ToDoList item)
         {
