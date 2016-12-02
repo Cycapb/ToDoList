@@ -228,6 +228,7 @@
     <Compile Include="Infrastructure\Atrributes\ValidateModelAttribute.cs" />
     <Compile Include="Infrastructure\CustomErrorAttribute.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
+    <Compile Include="Models\TodoListDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -247,7 +248,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ToDoDAL\ToDoDAL.csproj">
@@ -266,7 +266,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>63369</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

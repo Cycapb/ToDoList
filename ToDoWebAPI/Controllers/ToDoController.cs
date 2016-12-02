@@ -1,16 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Description;
 using NLog;
 using ToDoWebAPI.Abstract;
 using ToDoDAL.Model;
+using ToDoWebAPI.Models;
 
 namespace ToDoWebAPI.Controllers
 {
+    [RoutePrefix("api/todo")]
     public class ToDoController : ApiController
     {
         private static Logger Logger = LogManager.GetCurrentClassLogger();
@@ -21,65 +23,97 @@ namespace ToDoWebAPI.Controllers
             _valueProvider = valueProvider;
         }
 
-        public async Task<ToDoList> GetToDoList(int id)
+        [Route("{id:int}")]
+        [ResponseType(typeof(TodoListDto))]
+        public async Task<IHttpActionResult> GetToDoList(int id)
         {
-            return await _valueProvider.GetValueAsync(id);
+            var item = (await _valueProvider.GetValuesAsync())
+                .Where(x => x.NoteId == id)
+                .Select(x => new TodoListDto()
+                {
+                   NoteId = id,
+                   Comment = x.Comment,
+                   GroupId = x.GroupId,
+                   GroupName = x.Group.Name,
+                   Name = x.Name,
+                   StatusId = x.StatusId,
+                   UserId = x.UserId
+                })
+                .SingleOrDefault();
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return Ok(item);
         }
 
-        public async Task<IEnumerable<ToDoList>> GetTodoByUser(string userId)
+        [Route("{userId}")]
+        [ResponseType(typeof(TodoListDto))]
+        public async Task<IQueryable<TodoListDto>> GetTodoByUser(string userId)
         {
-            return (await _valueProvider.GetValuesAsync()).Where(x => x.UserId == userId).ToList();
+            return  (await _valueProvider.GetValuesAsync())
+                .Where(x => x.UserId == userId)
+                .Select(x => new TodoListDto
+                {
+                    NoteId = x.NoteId,
+                    Comment = x.Comment,
+                    GroupId = x.GroupId,
+                    GroupName = x.Group.Name,
+                    Name = x.Name,
+                    StatusId = x.StatusId,
+                    UserId = x.UserId
+                });
         }
 
         [HttpPost]
-        public async Task<HttpResponseMessage> CreateToDoList(ToDoList item)
+        [ResponseType(typeof(TodoListDto))]
+        public async Task<IHttpActionResult> CreateToDoList(ToDoList item)
         {
             if (ModelState.IsValid)
             {
                 await _valueProvider.CreateValueAsync(item);
-                return new HttpResponseMessage(HttpStatusCode.OK);
+                return CreatedAtRoute("DefaultApi", new {id = item.NoteId}, item);
             }
-            else
-            {
-                Logger.Warn($"User tried to create null ToDo item data from ip: {HttpContext.Current.Request.UserHostAddress}");
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest,ModelState);
-            }
+            Logger.Warn($"User tried to create null ToDo item data from ip: {HttpContext.Current.Request.UserHostAddress}");
+            return BadRequest(ModelState);
         }
 
         [HttpPut]
-        public async Task<HttpResponseMessage> UpdateToDo(int id, ToDoList item)
+        [ResponseType(typeof(TodoListDto))]
+        public async Task<IHttpActionResult> UpdateToDo(int id, ToDoList item)
         {
             if (ModelState.IsValid)
             {
                 await _valueProvider.UpdateValueAsync(item);
-                return new HttpResponseMessage(HttpStatusCode.OK);
+                return StatusCode(HttpStatusCode.NoContent);
             }
-            else
-            {
-                Logger.Warn($"User tried to update data from ip: {HttpContext.Current.Request.UserHostAddress}");
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
-            }
+            Logger.Warn($"User tried to update data from ip: {HttpContext.Current.Request.UserHostAddress}");
+            return BadRequest(ModelState);
         }
 
-        public async Task<HttpResponseMessage> DeleteToDoList(int id)
+        [ResponseType(typeof(TodoListDto))]
+        public async Task<IHttpActionResult> DeleteToDoList(int id)
         {
+            var item = await _valueProvider.GetValueAsync(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
             await _valueProvider.DeleteValueAsync(id);
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            return Ok(item);
         }
 
         [HttpPut]
-        public async Task<HttpResponseMessage> UpdateToDoList([FromBody]IEnumerable<ToDoList> items)
+        [ResponseType(typeof(TodoListDto))]
+        public async Task<IHttpActionResult> UpdateToDoList([FromBody]IEnumerable<ToDoList> items)
         {
             if (items == null)
             {
                 Logger.Warn($"User tried to update data from ip: {HttpContext.Current.Request.UserHostAddress}");
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
-            else
-            {
-                await _valueProvider.UpdateValuesAsync(items);
-                return new HttpResponseMessage(HttpStatusCode.OK);
-            } 
+            await _valueProvider.UpdateValuesAsync(items);
+            return StatusCode(HttpStatusCode.NoContent);
         }
     }
 }

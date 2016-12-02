@@ -17,41 +17,15 @@ namespace ToDoWebAPI.Concrete
             _repository = repository;
         }
 
-        public async Task<IEnumerable<ToDoList>> GetValuesAsync()
+        public async Task<IQueryable<ToDoList>> GetValuesAsync()
         {
-            return (await _repository.GetListAsync())
-                .Select(x => new ToDoList()
-                {
-                    Comment = x.Comment,
-                    Name = x.Name,
-                    GroupId = x.GroupId,
-                    GroupName = x.Group.Name,
-                    StatusId = x.StatusId,
-                    UserId = x.UserId,
-                    NoteId = x.NoteId
-                }); 
+            return (await _repository.GetListAsync());
         }
 
         public async Task<ToDoList> GetValueAsync(int id)
         {
             var item = await _repository.GetItemAsync(id);
-            if (item == null)
-            {
-                return null;
-            }
-            else
-            {
-                return new ToDoList()
-                {
-                    Comment = item.Comment,
-                    Name = item.Name,
-                    GroupId = item.GroupId,
-                    GroupName = item.Group.Name,
-                    StatusId = item.StatusId,
-                    UserId = item.UserId,
-                    NoteId = item.NoteId
-                };
-            }
+            return item;
         }
 
         public async Task CreateValueAsync(ToDoList item)

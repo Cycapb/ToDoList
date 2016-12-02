@@ -16,7 +16,7 @@ namespace ToDoWebAPI.Concrete
             _repository = repository;
         }
 
-        public async Task<IEnumerable<Group>> GetValuesAsync()
+        public async Task<IQueryable<Group>> GetValuesAsync()
         {
             return (await _repository.GetListAsync())
                 .Select(x => new Group()

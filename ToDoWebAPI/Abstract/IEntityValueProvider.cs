@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ToDoWebAPI.Abstract
@@ -6,7 +7,7 @@ namespace ToDoWebAPI.Abstract
     public interface IEntityValueProvider<T> where T:class
     {
 
-        Task<IEnumerable<T>> GetValuesAsync();
+        Task<IQueryable<T>> GetValuesAsync();
         Task<T> GetValueAsync(int id);
         Task CreateValueAsync(T item);
         Task UpdateValueAsync(T item);

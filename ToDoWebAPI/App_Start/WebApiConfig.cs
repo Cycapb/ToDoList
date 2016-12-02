@@ -11,10 +11,6 @@ namespace ToDoWebAPI
 
             config.MapHttpAttributeRoutes();
 
-            config.Routes.MapHttpRoute("",
-                "api/{controller}/{userId}",null,
-                new { userId = @"^([0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12})$" });
-
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
