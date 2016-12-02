@@ -228,6 +228,7 @@
     <Compile Include="Infrastructure\Atrributes\ValidateModelAttribute.cs" />
     <Compile Include="Infrastructure\CustomErrorAttribute.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
+    <Compile Include="Models\GroupDto.cs" />
     <Compile Include="Models\TodoListDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

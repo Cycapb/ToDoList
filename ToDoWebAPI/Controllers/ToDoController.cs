@@ -48,7 +48,6 @@ namespace ToDoWebAPI.Controllers
         }
 
         [Route("{userId}")]
-        [ResponseType(typeof(TodoListDto))]
         public async Task<IQueryable<TodoListDto>> GetTodoByUser(string userId)
         {
             return  (await _valueProvider.GetValuesAsync())
@@ -66,20 +65,32 @@ namespace ToDoWebAPI.Controllers
         }
 
         [HttpPost]
-        [ResponseType(typeof(TodoListDto))]
+        [ResponseType(typeof(ToDoList))]
         public async Task<IHttpActionResult> CreateToDoList(ToDoList item)
         {
             if (ModelState.IsValid)
             {
                 await _valueProvider.CreateValueAsync(item);
-                return CreatedAtRoute("DefaultApi", new {id = item.NoteId}, item);
+
+                var dto = new TodoListDto()
+                {
+                    Comment = item.Comment,
+                    GroupId = item.GroupId,
+                    GroupName = item.GroupName,
+                    Name = item.Name,
+                    NoteId = item.NoteId,
+                    StatusId = item.StatusId,
+                    UserId = item.UserId
+                };
+
+                return CreatedAtRoute("DefaultApi", new {id = item.NoteId}, dto);
             }
             Logger.Warn($"User tried to create null ToDo item data from ip: {HttpContext.Current.Request.UserHostAddress}");
             return BadRequest(ModelState);
         }
 
         [HttpPut]
-        [ResponseType(typeof(TodoListDto))]
+        [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> UpdateToDo(int id, ToDoList item)
         {
             if (ModelState.IsValid)
@@ -91,7 +102,7 @@ namespace ToDoWebAPI.Controllers
             return BadRequest(ModelState);
         }
 
-        [ResponseType(typeof(TodoListDto))]
+        [ResponseType(typeof(ToDoList))]
         public async Task<IHttpActionResult> DeleteToDoList(int id)
         {
             var item = await _valueProvider.GetValueAsync(id);
@@ -104,7 +115,7 @@ namespace ToDoWebAPI.Controllers
         }
 
         [HttpPut]
-        [ResponseType(typeof(TodoListDto))]
+        [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> UpdateToDoList([FromBody]IEnumerable<ToDoList> items)
         {
             if (items == null)
