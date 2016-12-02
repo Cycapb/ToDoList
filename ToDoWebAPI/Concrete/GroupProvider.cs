@@ -24,19 +24,7 @@ namespace ToDoWebAPI.Concrete
         public async Task<Group> GetValueAsync(int id)
         {
             var item = await _repository.GetItemAsync(id);
-            if (item == null)
-            {
-                return null;
-            }
-            else
-            {
-                return new Group()
-                {
-                    GroupId = item.GroupId,
-                    Name = item.Name,
-                    UserId = item.UserId
-                };
-            }
+            return item;
         }
 
         public async Task CreateValueAsync(Group item)
