@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using ToDoDAL.Concrete;
+﻿using ToDoDAL.Concrete;
 using ToDoDAL.Model;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ToDoWebAPI.Tests
@@ -24,11 +24,11 @@ namespace ToDoWebAPI.Tests
             _context.Entry(item).State = EntityState.Modified;
         }
 
-        public override Task<IEnumerable<T>> GetListAsync()
+        public override Task<IQueryable<T>> GetListAsync()
         {
             return Task.Run(() =>
             {
-                IEnumerable<T> list = _dbSet;
+                IQueryable<T> list = _dbSet;
                 return list;
             });
         }

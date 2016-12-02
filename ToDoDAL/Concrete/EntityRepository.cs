@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using ToDoDAL.Abstract;
 using ToDoDAL.Model;
@@ -39,11 +39,11 @@ namespace ToDoDAL.Concrete
             this._disposed = true;
         }
 
-        public virtual Task<IEnumerable<T>> GetListAsync()
+        public virtual Task<IQueryable<T>> GetListAsync()
         {
             return Task.Run(() =>
             {
-                IEnumerable<T> list = _dbSet;
+                IQueryable<T> list = _dbSet;
                 return list;
             });
         }
