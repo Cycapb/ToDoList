@@ -23,6 +23,6 @@ namespace ToDoDAL.Model
         public string UserId { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public ICollection<ToDoList> ToDoList { get; set; }
+        public virtual ICollection<ToDoList> ToDoList { get; set; }
     }
 }
