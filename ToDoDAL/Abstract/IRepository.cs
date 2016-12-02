@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ToDoDAL.Abstract
 {
     public interface IRepository<T>:IDisposable where T:class
     {
-        Task<IEnumerable<T>> GetListAsync();
+        Task<IQueryable<T>> GetListAsync();
         Task<T> GetItemAsync(int id);
         Task CreateAsync(T item);
         Task DeleteAsync(int id);
