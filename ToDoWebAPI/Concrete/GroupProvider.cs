@@ -18,13 +18,7 @@ namespace ToDoWebAPI.Concrete
 
         public async Task<IQueryable<Group>> GetValuesAsync()
         {
-            return (await _repository.GetListAsync())
-                .Select(x => new Group()
-                {
-                    GroupId = x.GroupId,
-                    Name = x.Name,
-                    UserId = x.UserId
-                });
+            return await _repository.GetListAsync();
         }
 
         public async Task<Group> GetValueAsync(int id)
