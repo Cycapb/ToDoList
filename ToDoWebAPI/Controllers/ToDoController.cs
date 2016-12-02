@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Antlr.Runtime.Misc;
 using NLog;
 using ToDoWebAPI.Abstract;
 using ToDoDAL.Model;
@@ -17,7 +19,7 @@ namespace ToDoWebAPI.Controllers
     {
         private static Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IEntityValueProvider<ToDoList> _valueProvider;
-
+        
         public ToDoController(IEntityValueProvider<ToDoList> valueProvider)
         {
             _valueProvider = valueProvider;
@@ -31,13 +33,11 @@ namespace ToDoWebAPI.Controllers
                 .Where(x => x.NoteId == id)
                 .Select(x => new TodoListDto()
                 {
-                   NoteId = id,
-                   Comment = x.Comment,
-                   GroupId = x.GroupId,
-                   GroupName = x.Group.Name,
-                   Name = x.Name,
-                   StatusId = x.StatusId,
-                   UserId = x.UserId
+                    NoteId = x.NoteId,
+                    Comment = x.Comment,
+                    GroupName = x.Group.Name,
+                    Name = x.Name,
+                    StatusId = x.StatusId,
                 })
                 .SingleOrDefault();
             if (item == null)
@@ -50,19 +50,19 @@ namespace ToDoWebAPI.Controllers
         [Route("{userId}")]
         public async Task<IQueryable<TodoListDto>> GetTodoByUser(string userId)
         {
-            return  (await _valueProvider.GetValuesAsync())
+            return (await _valueProvider.GetValuesAsync())
                 .Where(x => x.UserId == userId)
-                .Select(x => new TodoListDto
+                .Select(x => new TodoListDto()
                 {
                     NoteId = x.NoteId,
                     Comment = x.Comment,
-                    GroupId = x.GroupId,
                     GroupName = x.Group.Name,
                     Name = x.Name,
-                    StatusId = x.StatusId,
-                    UserId = x.UserId
+                    StatusId = x.StatusId
                 });
         }
+
+
 
         [HttpPost]
         [ResponseType(typeof(ToDoList))]
@@ -72,16 +72,7 @@ namespace ToDoWebAPI.Controllers
             {
                 await _valueProvider.CreateValueAsync(item);
 
-                var dto = new TodoListDto()
-                {
-                    Comment = item.Comment,
-                    GroupId = item.GroupId,
-                    GroupName = item.GroupName,
-                    Name = item.Name,
-                    NoteId = item.NoteId,
-                    StatusId = item.StatusId,
-                    UserId = item.UserId
-                };
+                var dto = Convert(item);
 
                 return CreatedAtRoute("DefaultApi", new {id = item.NoteId}, dto);
             }
@@ -125,6 +116,18 @@ namespace ToDoWebAPI.Controllers
             }
             await _valueProvider.UpdateValuesAsync(items);
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        private static TodoListDto Convert(ToDoList x)
+        {
+            return new TodoListDto()
+            {
+                NoteId = x.NoteId,
+                Comment = x.Comment,
+                GroupName = x.Group.Name,
+                Name = x.Name,
+                StatusId = x.StatusId,
+            };
         }
     }
 }
