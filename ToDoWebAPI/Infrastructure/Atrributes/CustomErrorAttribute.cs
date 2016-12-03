@@ -2,7 +2,7 @@
 using System.Web.Http.Filters;
 using NLog;
 
-namespace ToDoWebAPI.Infrastructure
+namespace ToDoWebAPI.Infrastructure.Atrributes
 {
     public class CustomErrorAttribute:ExceptionFilterAttribute
     {
