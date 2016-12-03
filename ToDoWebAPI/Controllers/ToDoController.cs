@@ -2,10 +2,8 @@
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
-using NLog;
 using ToDoWebAPI.Abstract;
 using ToDoDAL.Model;
 using ToDoWebAPI.Models;
@@ -15,7 +13,6 @@ namespace ToDoWebAPI.Controllers
     [RoutePrefix("api/todo")]
     public class ToDoController : ApiController
     {
-        private static Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IEntityValueProvider<ToDoList> _valueProvider;
         
         public ToDoController(IEntityValueProvider<ToDoList> valueProvider)
@@ -74,7 +71,6 @@ namespace ToDoWebAPI.Controllers
 
                 return CreatedAtRoute("DefaultApi", new {id = item.NoteId}, dto);
             }
-            Logger.Warn($"User tried to create null ToDo item data from ip: {HttpContext.Current.Request.UserHostAddress}");
             return BadRequest(ModelState);
         }
 
@@ -87,7 +83,6 @@ namespace ToDoWebAPI.Controllers
                 await _valueProvider.UpdateValueAsync(item);
                 return StatusCode(HttpStatusCode.NoContent);
             }
-            Logger.Warn($"User tried to update data from ip: {HttpContext.Current.Request.UserHostAddress}");
             return BadRequest(ModelState);
         }
 
@@ -109,7 +104,6 @@ namespace ToDoWebAPI.Controllers
         {
             if (items == null)
             {
-                Logger.Warn($"User tried to update data from ip: {HttpContext.Current.Request.UserHostAddress}");
                 return BadRequest();
             }
             await _valueProvider.UpdateValuesAsync(items);
