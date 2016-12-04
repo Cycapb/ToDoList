@@ -24,7 +24,7 @@ namespace ToDoWebAPI.Controllers
         [ResponseType(typeof(TodoListDto))]
         public async Task<IHttpActionResult> GetToDoList(int id)
         {
-            var item = (await _valueProvider.GetValuesAsync())
+            var item = (await _valueProvider.GetValuesAsync())?
                 .Where(x => x.NoteId == id)
                 .Select(x => new TodoListDto()
                 {

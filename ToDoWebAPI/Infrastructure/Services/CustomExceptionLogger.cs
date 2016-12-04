@@ -30,7 +30,7 @@ namespace ToDoWebAPI.Infrastructure.Services
                     message.AppendLine($"{cookieItem.Name} : {str}");
                 }
             }
-            _logger.Log(LogLevel.Error,context.Exception, $"Data: {message}");
+            _logger.Log(LogLevel.Error,$"Data: {message}\n {context.Exception.Message}");
             return Task.CompletedTask;
         }
     }
