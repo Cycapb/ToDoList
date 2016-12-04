@@ -97,6 +97,7 @@ namespace ToDoWebAPI.Tests
             _provider.Verify(m => m.CreateValueAsync(It.IsAny<ToDoList>()), Times.Exactly(1));
             Assert.IsNotNull(contentResult);
             Assert.AreEqual(contentResult.Content.NoteId,1);
+            Assert.AreEqual(contentResult.RouteName,"DefaultApi");
         }
 
         [TestMethod]
@@ -120,5 +121,31 @@ namespace ToDoWebAPI.Tests
             Assert.IsNotNull(contentResult);
             Assert.AreEqual(contentResult.StatusCode, HttpStatusCode.NoContent);
         }
+
+        [TestMethod]
+        public async Task Delete_ReturnsNotFoundIfNull()
+        {
+            _provider.Setup(x => x.GetValueAsync(It.IsAny<int>())).ReturnsAsync(null);
+
+            var result = await _controller.DeleteToDoList(1);
+            var contentResult = result as NotFoundResult;
+
+            Assert.IsNotNull(contentResult);
+            Assert.IsInstanceOfType(contentResult, typeof(NotFoundResult));
+        }
+
+        [TestMethod]
+        public async Task Delete_ReturnsOkNegotiatedContentResult()
+        {
+            _provider.Setup(x => x.GetValueAsync(1)).ReturnsAsync(new ToDoList() {NoteId = 1});
+
+            var result = await _controller.DeleteToDoList(1);
+            var contentResult = result as OkResult;
+
+            _provider.Verify(m => m.DeleteValueAsync(It.IsAny<int>()),Times.Exactly(1));
+            Assert.IsNotNull(contentResult);
+            Assert.IsInstanceOfType(contentResult, typeof(OkResult));
+        }
+
     }
 }

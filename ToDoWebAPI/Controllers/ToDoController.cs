@@ -95,7 +95,7 @@ namespace ToDoWebAPI.Controllers
                 return NotFound();
             }
             await _valueProvider.DeleteValueAsync(id);
-            return Ok(item);
+            return Ok();
         }
 
         [HttpPut]
