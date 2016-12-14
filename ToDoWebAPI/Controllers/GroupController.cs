@@ -41,7 +41,7 @@ namespace ToDoWebAPI.Controllers
         [Route("{userId}")]
         public async Task<IQueryable<GroupDto>> GetValues(string userId)
         {
-            return (await _valueProvider.GetValuesAsync())
+            return (await _valueProvider.GetValuesAsync())?
                 .Where(x => x.UserId == userId)
                 .Select(x => new GroupDto()
                 {
@@ -55,7 +55,8 @@ namespace ToDoWebAPI.Controllers
         public async Task<IQueryable<TodoListDto>> GetTodoLists(int id)
         {
             var group = await _valueProvider.GetValueAsync(id);
-            var items = group.ToDoList.AsQueryable()
+
+            var items = group?.ToDoList.AsQueryable()
                 .Select(x => new TodoListDto()
                 {
                     NoteId = x.NoteId,
@@ -96,7 +97,7 @@ namespace ToDoWebAPI.Controllers
         {
             try
             {
-                var item = _valueProvider.GetValueAsync(id);
+                var item = await _valueProvider.GetValueAsync(id);
                 if (item == null)
                 {
                     return NotFound();
