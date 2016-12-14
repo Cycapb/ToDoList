@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Net.Http;
 using System.Web.Mvc;
 
 namespace ToDoDAL.Model
@@ -6,6 +8,10 @@ namespace ToDoDAL.Model
     [MetadataType(typeof(GroupMetadata))]
     public partial class Group
     {
+        public static explicit operator Group(HttpContent v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class GroupMetadata

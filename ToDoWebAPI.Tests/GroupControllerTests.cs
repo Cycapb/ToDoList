@@ -167,5 +167,30 @@ namespace ToDoWebAPI.Tests
             Assert.IsNotNull(contentResult);
             Assert.AreEqual(contentResult.Content.GroupId, 1);
         }
+
+        [TestMethod]
+        public async Task CreateGroup_ReturnsBadRequest()
+        {
+            _controller.ModelState.AddModelError("","");
+
+            var result = await _controller.CreateGroup(new Group());
+            var contentResult = result as InvalidModelStateResult;
+
+            Assert.IsNotNull(contentResult);
+            Assert.AreEqual(contentResult.ModelState.Keys.Count,1);
+        }
+
+        [TestMethod]
+        public async Task CreateGroup_ReturnsCreateAtRouteResult()
+        {
+            var result = await _controller.CreateGroup(new Group() {GroupId = 1});
+            var contentResult = result as CreatedAtRouteNegotiatedContentResult<Group>;
+
+            _provider.Verify(m => m.CreateValueAsync(It.IsAny<Group>()), Times.Exactly(1));
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(contentResult);
+            Assert.AreEqual(contentResult.RouteName,"DefaultApi");
+            Assert.AreEqual(contentResult.Content.GroupId,1);
+        }
     }
 }
