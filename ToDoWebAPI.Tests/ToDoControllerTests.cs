@@ -147,5 +147,22 @@ namespace ToDoWebAPI.Tests
             Assert.IsInstanceOfType(contentResult, typeof(OkResult));
         }
 
+        [TestMethod]
+        public async Task UpdateTodoList_ReturnsBadRequest()
+        {
+            var result = await _controller.UpdateToDoList(null);
+            var contentResult = result as BadRequestResult;
+
+            Assert.IsNotNull(contentResult);
+        }
+
+        [TestMethod]
+        public async Task UpdateTodoList_ReturnsNoContentStatus()
+        {
+            var result = await _controller.UpdateToDoList(_todoList);
+            
+            _provider.Verify(m => m.UpdateValuesAsync(It.IsAny<IEnumerable<ToDoList>>()),Times.Exactly(1));
+            Assert.IsNotNull(result);
+        }
     }
 }
