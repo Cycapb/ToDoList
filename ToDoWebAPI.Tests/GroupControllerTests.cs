@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Web.Http.Results;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using ToDoDAL.Abstract;
 using ToDoDAL.Model;
 using ToDoWebAPI.Abstract;
 using ToDoWebAPI.Controllers;
