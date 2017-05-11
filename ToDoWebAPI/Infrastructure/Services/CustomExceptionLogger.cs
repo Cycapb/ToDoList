@@ -31,7 +31,7 @@ namespace ToDoWebAPI.Infrastructure.Services
                 }
             }
             _logger.Log(LogLevel.Error,$"Data: {message}\n {context.Exception.Message}");
-            return Task.CompletedTask;
+            return Task.FromResult(true);
         }
     }
 }
