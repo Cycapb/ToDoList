@@ -2,6 +2,7 @@ namespace ToDoDAL.Model
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System;
 
     [Table("ToDoList")]
     public partial class ToDoList
@@ -21,7 +22,7 @@ namespace ToDoDAL.Model
         public bool StatusId { get; set; }
 
         [Required]
-        public string UserId { get; set; }        
+        public string UserId { get; set; }
 
         public virtual Group Group { get; set; }
     }

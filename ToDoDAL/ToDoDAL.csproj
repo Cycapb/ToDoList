@@ -106,6 +106,14 @@
     <Compile Include="Migrations\201611300453079_DelDate.Designer.cs">
       <DependentUpon>201611300453079_DelDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705150948123_AddDateProperty.cs" />
+    <Compile Include="Migrations\201705150948123_AddDateProperty.Designer.cs">
+      <DependentUpon>201705150948123_AddDateProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705150949178_DeleteDateProperty.cs" />
+    <Compile Include="Migrations\201705150949178_DeleteDateProperty.Designer.cs">
+      <DependentUpon>201705150949178_DeleteDateProperty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Group.cs" />
     <Compile Include="Model\MongoModel\Task.cs" />
@@ -129,6 +137,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611300453079_DelDate.resx">
       <DependentUpon>201611300453079_DelDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705150948123_AddDateProperty.resx">
+      <DependentUpon>201705150948123_AddDateProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705150949178_DeleteDateProperty.resx">
+      <DependentUpon>201705150949178_DeleteDateProperty.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
