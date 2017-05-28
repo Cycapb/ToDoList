@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoDAL", "ToDoDAL\ToDoDAL.csproj", "{B7048EC4-AAAC-42AC-A5FC-97008925FF10}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoWebAPI", "ToDoWebAPI\ToDoWebAPI.csproj", "{AE6A721E-8CA8-4AB3-8A79-D6A73AC21C7D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoWebAPI.Tests", "ToDoWebAPI.Tests\ToDoWebAPI.Tests.csproj", "{A6FE4BBE-9EC7-4108-831A-3D1EA8203E16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{14228E67-46ED-49D7-9BB0-58E9D99DAA8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{A6FE4BBE-9EC7-4108-831A-3D1EA8203E16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6FE4BBE-9EC7-4108-831A-3D1EA8203E16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6FE4BBE-9EC7-4108-831A-3D1EA8203E16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14228E67-46ED-49D7-9BB0-58E9D99DAA8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14228E67-46ED-49D7-9BB0-58E9D99DAA8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14228E67-46ED-49D7-9BB0-58E9D99DAA8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14228E67-46ED-49D7-9BB0-58E9D99DAA8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
