@@ -76,7 +76,7 @@ namespace ToDoWebAPI.Controllers
 
         [HttpPut]
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> UpdateToDo(int id, ToDoList item)
+        public async Task<IHttpActionResult> UpdateToDo([FromBody]ToDoList item)
         {
             if (ModelState.IsValid)
             {
