@@ -26,6 +26,7 @@
     </NuGetPackageImportStamp>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -223,7 +224,6 @@
     <Compile Include="Concrete\ToDoListProvider.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\ToDoController.cs" />
-    <Compile Include="Controllers\XmlController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -254,10 +254,6 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Services\Services.csproj">
-      <Project>{14228e67-46ed-49d7-9bb0-58e9d99daa8d}</Project>
-      <Name>Services</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ToDoDAL\ToDoDAL.csproj">
       <Project>{b7048ec4-aaac-42ac-a5fc-97008925ff10}</Project>
       <Name>ToDoDAL</Name>
