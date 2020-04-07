@@ -7,39 +7,39 @@ using ToDoWebAPI.Abstract;
 
 namespace ToDoWebAPI.Concrete
 {
-    public class ToDoListProvider:IEntityValueProvider<ToDoList>
+    public class ToDoListProvider:IEntityValueProvider<TodoItem>
     {
-        private readonly IRepository<ToDoList> _repository;
+        private readonly IRepository<TodoItem> _repository;
 
-        public ToDoListProvider(IRepository<ToDoList> repository)
+        public ToDoListProvider(IRepository<TodoItem> repository)
         {
             _repository = repository;
         }
 
-        public async Task<IQueryable<ToDoList>> GetValuesAsync()
+        public async Task<IQueryable<TodoItem>> GetValuesAsync()
         {
             return (await _repository.GetListAsync());
         }
 
-        public async Task<ToDoList> GetValueAsync(int id)
+        public async Task<TodoItem> GetValueAsync(int id)
         {
             var item = await _repository.GetItemAsync(id);
             return item;
         }
 
-        public async Task CreateValueAsync(ToDoList item)
+        public async Task CreateValueAsync(TodoItem item)
         {
             await _repository.CreateAsync(item);
             await _repository.SaveAsync();
         }
 
-        public async Task UpdateValueAsync(ToDoList item)
+        public async Task UpdateValueAsync(TodoItem item)
         {
             await _repository.UpdateAsync(item);
             await _repository.SaveAsync();
         }
 
-        public async Task UpdateValuesAsync(IEnumerable<ToDoList> items)
+        public async Task UpdateValuesAsync(IEnumerable<TodoItem> items)
         {
             foreach (var item in items)
             {

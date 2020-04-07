@@ -15,19 +15,19 @@ namespace ToDoWebAPI.Tests
     [TestClass]
     public class ToDoControllerTests
     {
-        private readonly Mock<IEntityValueProvider<ToDoList>> _provider;
-        private readonly IQueryable<ToDoList> _todoList = new List<ToDoList>()
+        private readonly Mock<IEntityValueProvider<TodoItem>> _provider;
+        private readonly IQueryable<TodoItem> _todoList = new List<TodoItem>()
         {
-            new ToDoList() {NoteId = 1,Comment = "",GroupName = "G1",Name = "T1",StatusId = false,Group = new Group(),UserId = "U1"},
-            new ToDoList() {NoteId = 2,Comment = "",GroupName = "G1",Name = "T2",StatusId = false,Group = new Group(),UserId = "U1"},
-            new ToDoList() {NoteId = 3,Comment = "",GroupName = "G1",Name = "T3",StatusId = false,Group = new Group(),UserId = "U1"}
+            new TodoItem() {Id = 1,Description = "",GroupName = "G1",IsFinished = false,Group = new TodoGroup(),UserId = "U1"},
+            new TodoItem() {Id = 2,Description = "",GroupName = "G1",IsFinished = false,Group = new TodoGroup(),UserId = "U1"},
+            new TodoItem() {Id = 3,Description = "",GroupName = "G1",IsFinished = false,Group = new TodoGroup(),UserId = "U1"}
         }.AsQueryable();
 
         private readonly ToDoController _controller;
 
         public ToDoControllerTests()
         {
-            _provider = new Mock<IEntityValueProvider<ToDoList>>();
+            _provider = new Mock<IEntityValueProvider<TodoItem>>();
             _controller = new ToDoController(_provider.Object);
         }
 
@@ -73,7 +73,7 @@ namespace ToDoWebAPI.Tests
         {
             _controller.ModelState.AddModelError("", "");
 
-            var result = await _controller.CreateToDoList(new ToDoList());
+            var result = await _controller.CreateToDoList(new TodoItem());
             var contentResult = result as InvalidModelStateResult;
 
             Assert.IsInstanceOfType(contentResult, typeof(InvalidModelStateResult));
@@ -82,19 +82,18 @@ namespace ToDoWebAPI.Tests
         [TestMethod]
         public async Task CreateTodoList_ReturnsCreatedAtRouteResult()
         {
-            var result = await _controller.CreateToDoList(new ToDoList()
+            var result = await _controller.CreateToDoList(new TodoItem()
             {
-                NoteId = 1,
-                Comment = "",
+                Id = 1,
+                Description = "T1",
                 GroupName = "G1",
-                Name = "T1",
-                StatusId = false,
-                Group = new Group(),
+                IsFinished = false,
+                Group = new TodoGroup(),
                 UserId = "U1"
             });
             var contentResult = result as CreatedAtRouteNegotiatedContentResult<TodoListDto>;
 
-            _provider.Verify(m => m.CreateValueAsync(It.IsAny<ToDoList>()), Times.Exactly(1));
+            _provider.Verify(m => m.CreateValueAsync(It.IsAny<TodoItem>()), Times.Exactly(1));
             Assert.IsNotNull(contentResult);
             Assert.AreEqual(contentResult.Content.NoteId,1);
             Assert.AreEqual(contentResult.RouteName,"DefaultApi");
@@ -105,7 +104,7 @@ namespace ToDoWebAPI.Tests
         {
             _controller.ModelState.AddModelError("","");
 
-            var result = await _controller.UpdateToDo(1, new ToDoList());
+            var result = await _controller.UpdateToDo(new TodoItem());
 
             Assert.IsInstanceOfType(result, typeof(InvalidModelStateResult));
         }
@@ -113,10 +112,10 @@ namespace ToDoWebAPI.Tests
         [TestMethod]
         public async Task UpdateTodoList_ReturnsNoContentRespons()
         {
-            var result = await _controller.UpdateToDo(1, new ToDoList());
+            var result = await _controller.UpdateToDo(new TodoItem());
             var contentResult = result as StatusCodeResult;
 
-            _provider.Verify(m => m.UpdateValueAsync(It.IsAny<ToDoList>()),Times.Exactly(1));
+            _provider.Verify(m => m.UpdateValueAsync(It.IsAny<TodoItem>()),Times.Exactly(1));
             Assert.IsInstanceOfType(result,typeof(StatusCodeResult));
             Assert.IsNotNull(contentResult);
             Assert.AreEqual(contentResult.StatusCode, HttpStatusCode.NoContent);
@@ -137,7 +136,7 @@ namespace ToDoWebAPI.Tests
         [TestMethod]
         public async Task Delete_ReturnsOkNegotiatedContentResult()
         {
-            _provider.Setup(x => x.GetValueAsync(1)).ReturnsAsync(new ToDoList() {NoteId = 1});
+            _provider.Setup(x => x.GetValueAsync(1)).ReturnsAsync(new TodoItem() {Id = 1});
 
             var result = await _controller.DeleteToDoList(1);
             var contentResult = result as OkResult;
@@ -161,7 +160,7 @@ namespace ToDoWebAPI.Tests
         {
             var result = await _controller.UpdateToDoList(_todoList);
             
-            _provider.Verify(m => m.UpdateValuesAsync(It.IsAny<IEnumerable<ToDoList>>()),Times.Exactly(1));
+            _provider.Verify(m => m.UpdateValuesAsync(It.IsAny<IEnumerable<TodoItem>>()),Times.Exactly(1));
             Assert.IsNotNull(result);
         }
     }

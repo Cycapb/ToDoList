@@ -13,9 +13,9 @@ namespace ToDoWebAPI.Controllers
     [RoutePrefix("api/todo")]
     public class ToDoController : ApiController
     {
-        private readonly IEntityValueProvider<ToDoList> _valueProvider;
+        private readonly IEntityValueProvider<TodoItem> _valueProvider;
         
-        public ToDoController(IEntityValueProvider<ToDoList> valueProvider)
+        public ToDoController(IEntityValueProvider<TodoItem> valueProvider)
         {
             _valueProvider = valueProvider;
         }
@@ -25,14 +25,13 @@ namespace ToDoWebAPI.Controllers
         public async Task<IHttpActionResult> GetToDoList(int id)
         {
             var item = (await _valueProvider.GetValuesAsync())?
-                .Where(x => x.NoteId == id)
+                .Where(x => x.Id == id)
                 .Select(x => new TodoListDto()
                 {
-                    NoteId = x.NoteId,
-                    Comment = x.Comment,
+                    NoteId = x.Id,
+                    Description = x.Description,
                     GroupName = x.Group.Name,
-                    Name = x.Name,
-                    StatusId = x.StatusId,
+                    StatusId = x.IsFinished,
                 })
                 .SingleOrDefault();
             if (item == null)
@@ -49,19 +48,18 @@ namespace ToDoWebAPI.Controllers
                 .Where(x => x.UserId == userId)
                 .Select(x => new TodoListDto()
                 {
-                    NoteId = x.NoteId,
-                    Comment = x.Comment,
+                    NoteId = x.Id,
+                    Description = x.Description,
                     GroupName = x.Group.Name,
-                    Name = x.Name,
-                    StatusId = x.StatusId
+                    StatusId = x.IsFinished
                 });
         }
 
 
 
         [HttpPost]
-        [ResponseType(typeof(ToDoList))]
-        public async Task<IHttpActionResult> CreateToDoList(ToDoList item)
+        [ResponseType(typeof(TodoItem))]
+        public async Task<IHttpActionResult> CreateToDoList(TodoItem item)
         {
             if (ModelState.IsValid)
             {
@@ -69,14 +67,14 @@ namespace ToDoWebAPI.Controllers
 
                 var dto = Convert(item);
 
-                return CreatedAtRoute("DefaultApi", new {id = item.NoteId}, dto);
+                return CreatedAtRoute("DefaultApi", new {id = item.Id}, dto);
             }
             return BadRequest(ModelState);
         }
 
         [HttpPut]
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> UpdateToDo([FromBody]ToDoList item)
+        public async Task<IHttpActionResult> UpdateToDo([FromBody]TodoItem item)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +84,7 @@ namespace ToDoWebAPI.Controllers
             return BadRequest(ModelState);
         }
 
-        [ResponseType(typeof(ToDoList))]
+        [ResponseType(typeof(TodoItem))]
         public async Task<IHttpActionResult> DeleteToDoList(int id)
         {
             var item = await _valueProvider.GetValueAsync(id);
@@ -100,7 +98,7 @@ namespace ToDoWebAPI.Controllers
 
         [HttpPut]
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> UpdateToDoList([FromBody]IEnumerable<ToDoList> items)
+        public async Task<IHttpActionResult> UpdateToDoList([FromBody]IEnumerable<TodoItem> items)
         {
             if (items == null)
             {
@@ -110,15 +108,14 @@ namespace ToDoWebAPI.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        private static TodoListDto Convert(ToDoList x)
+        private static TodoListDto Convert(TodoItem x)
         {
             return new TodoListDto()
             {
-                NoteId = x.NoteId,
-                Comment = x.Comment,
+                NoteId = x.Id,
+                Description = x.Description,
                 GroupName = x.Group.Name,
-                Name = x.Name,
-                StatusId = x.StatusId,
+                StatusId = x.IsFinished,
             };
         }
     }

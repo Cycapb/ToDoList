@@ -115,13 +115,11 @@
       <DependentUpon>201705150949178_DeleteDateProperty.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Model\Group.cs" />
+    <Compile Include="Model\TodoGroup.cs" />
     <Compile Include="Model\MongoModel\Task.cs" />
     <Compile Include="Model\MongoModel\TaskGroup.cs" />
-    <Compile Include="Model\Partial\Group.cs" />
-    <Compile Include="Model\Partial\ToDoList.cs" />
     <Compile Include="Model\TodoContext.cs" />
-    <Compile Include="Model\ToDoList.cs" />
+    <Compile Include="Model\TodoItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

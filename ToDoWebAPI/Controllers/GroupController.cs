@@ -13,15 +13,15 @@ namespace ToDoWebAPI.Controllers
     [RoutePrefix("api/group")]
     public class GroupController : ApiController
     {
-        private readonly IEntityValueProvider<Group> _valueProvider;
+        private readonly IEntityValueProvider<TodoGroup> _valueProvider;
 
-        public GroupController(IEntityValueProvider<Group> valueProvider)
+        public GroupController(IEntityValueProvider<TodoGroup> valueProvider)
         {
             _valueProvider = valueProvider;
         }
 
         [Route("{id:int}")]
-        [ResponseType(typeof(Group))]
+        [ResponseType(typeof(TodoGroup))]
         public async Task<IHttpActionResult> GetGroup(int id)
         {
             var group = await _valueProvider.GetValueAsync(id);
@@ -31,7 +31,7 @@ namespace ToDoWebAPI.Controllers
             }
             var groupDto = new GroupDto()
             {
-                GroupId = group.GroupId,
+                GroupId = group.Id,
                 Name = group.Name,
                 UserId = group.UserId
             };
@@ -46,7 +46,7 @@ namespace ToDoWebAPI.Controllers
                 .Select(x => new GroupDto()
                 {
                     UserId = x.UserId,
-                    GroupId = x.GroupId,
+                    GroupId = x.Id,
                     Name = x.Name
                 });
         }
@@ -56,34 +56,33 @@ namespace ToDoWebAPI.Controllers
         {
             var group = await _valueProvider.GetValueAsync(id);
 
-            var items = group?.ToDoList.AsQueryable()
+            var items = group?.TodoItems.AsQueryable()
                 .Select(x => new TodoListDto()
                 {
-                    NoteId = x.NoteId,
-                    Comment = x.Comment,
+                    NoteId = x.Id,
+                    Description = x.Description,
                     GroupName = x.Group.Name,
-                    Name = x.Name,
-                    StatusId = x.StatusId,
+                    StatusId = x.IsFinished,
                 });
             return items;
 
         }
 
         [HttpPost]
-        [ResponseType(typeof(Group))]
-        public async Task<IHttpActionResult> CreateGroup(Group group)
+        [ResponseType(typeof(TodoGroup))]
+        public async Task<IHttpActionResult> CreateGroup(TodoGroup group)
         {
             if (ModelState.IsValid)
             {
                 await _valueProvider.CreateValueAsync(group);
-                return CreatedAtRoute("DefaultApi",new {id = group.GroupId}, group);
+                return CreatedAtRoute("DefaultApi",new {id = group.Id}, group);
             }
             return BadRequest(ModelState);
         }
 
         [HttpPut]
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> UpdateGroup(Group item)
+        public async Task<IHttpActionResult> UpdateGroup(TodoGroup item)
         {
             if (ModelState.IsValid)
             {

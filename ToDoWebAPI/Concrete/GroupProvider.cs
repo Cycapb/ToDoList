@@ -7,39 +7,39 @@ using ToDoWebAPI.Abstract;
 
 namespace ToDoWebAPI.Concrete
 {
-    public class GroupProvider:IEntityValueProvider<Group>
+    public class GroupProvider:IEntityValueProvider<TodoGroup>
     {
-        private readonly IRepository<Group> _repository;
+        private readonly IRepository<TodoGroup> _repository;
 
-        public GroupProvider(IRepository<Group> repository)
+        public GroupProvider(IRepository<TodoGroup> repository)
         {
             _repository = repository;
         }
 
-        public async Task<IQueryable<Group>> GetValuesAsync()
+        public async Task<IQueryable<TodoGroup>> GetValuesAsync()
         {
             return await _repository.GetListAsync();
         }
 
-        public async Task<Group> GetValueAsync(int id)
+        public async Task<TodoGroup> GetValueAsync(int id)
         {
             var item = await _repository.GetItemAsync(id);
             return item;
         }
 
-        public async Task CreateValueAsync(Group item)
+        public async Task CreateValueAsync(TodoGroup item)
         {
             await _repository.CreateAsync(item);
             await _repository.SaveAsync();
         }
 
-        public async Task UpdateValueAsync(Group item)
+        public async Task UpdateValueAsync(TodoGroup item)
         {
             await _repository.UpdateAsync(item);
             await _repository.SaveAsync();
         }
 
-        public async Task UpdateValuesAsync(IEnumerable<Group> items)
+        public async Task UpdateValuesAsync(IEnumerable<TodoGroup> items)
         {
             foreach (var group in items)
             {
