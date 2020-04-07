@@ -128,33 +128,33 @@ namespace ToDoWebAPI.Tests
             mockClass.MockDbSet.Verify(m=>m.Remove(It.IsAny<TodoItem>()),Times.Once);
         }
 
-        [TestMethod]
-        public async Task UpdateAsyncToDoList()
-        {
-            var toDoList = _toDoList.AsQueryable();
-            var mockSet = new Mock<DbSet<TodoItem>>();
-            mockSet.Setup(m => m.Find(It.IsAny<object[]>()))
-                .Returns<object[]>(ids => mockSet.Object.FirstOrDefault(x => x.Id == (int)ids[0]));
-            mockSet.As<IQueryable<TodoItem>>().Setup(m => m.Provider).Returns(toDoList.Provider);
-            mockSet.As<IQueryable<TodoItem>>().Setup(m => m.Expression).Returns(toDoList.Expression);
-            mockSet.As<IQueryable<TodoItem>>().Setup(m => m.ElementType).Returns(toDoList.ElementType);
-            mockSet.As<IQueryable<TodoItem>>().Setup(m => m.GetEnumerator()).Returns(() => toDoList.GetEnumerator());
-            var mockContext = new Mock<TodoContext>();
-            mockContext.Setup(c => c.Set<TodoItem>()).Returns(mockSet.Object);
-            var itemId = 2;
-            Mock<EntityRepositoryFake<TodoItem>> mockRepo = new Mock<EntityRepositoryFake<TodoItem>>(mockContext.Object);
-            mockRepo.Setup(m => m.UpdateAsync(It.IsAny<TodoItem>()));
-            mockRepo.Setup(m => m.GetItemAsync(It.IsAny<int>())).ReturnsAsync(mockSet.Object.Find(itemId));
+        //[TestMethod]
+        //public async Task UpdateAsyncToDoList()
+        //{
+        //    var toDoList = _toDoList.AsQueryable();
+        //    var mockSet = new Mock<DbSet<TodoItem>>();
+        //    mockSet.Setup(m => m.Find(It.IsAny<object[]>()))
+        //        .Returns<object[]>(ids => mockSet.Object.FirstOrDefault(x => x.Id == (int)ids[0]));
+        //    mockSet.As<IQueryable<TodoItem>>().Setup(m => m.Provider).Returns(toDoList.Provider);
+        //    mockSet.As<IQueryable<TodoItem>>().Setup(m => m.Expression).Returns(toDoList.Expression);
+        //    mockSet.As<IQueryable<TodoItem>>().Setup(m => m.ElementType).Returns(toDoList.ElementType);
+        //    mockSet.As<IQueryable<TodoItem>>().Setup(m => m.GetEnumerator()).Returns(() => toDoList.GetEnumerator());
+        //    var mockContext = new Mock<TodoContext>();
+        //    mockContext.Setup(c => c.Set<TodoItem>()).Returns(mockSet.Object);
+        //    var itemId = 2;
+        //    Mock<EntityRepositoryFake<TodoItem>> mockRepo = new Mock<EntityRepositoryFake<TodoItem>>(mockContext.Object);
+        //    mockRepo.Setup(m => m.UpdateAsync(It.IsAny<TodoItem>()));
+        //    mockRepo.Setup(m => m.GetItemAsync(It.IsAny<int>())).ReturnsAsync(mockSet.Object.Find(itemId));
 
-            var newTodo = await mockRepo.Object.GetItemAsync(itemId);
-            newTodo.Description = "N22";
-            await mockRepo.Object.UpdateAsync(newTodo);
-            var updatedItem = await mockRepo.Object.GetItemAsync(itemId);
+        //    var newTodo = await mockRepo.Object.GetItemAsync(itemId);
+        //    newTodo.Description = "N22";
+        //    await mockRepo.Object.UpdateAsync(newTodo);
+        //    var updatedItem = await mockRepo.Object.GetItemAsync(itemId);
 
-            mockRepo.Verify(m=>m.UpdateAsync(newTodo),Times.Once);
+        //    mockRepo.Verify(m=>m.UpdateAsync(newTodo),Times.Once);
             
-            Assert.AreEqual(updatedItem.Description,"N22");
-        }
+        //    Assert.AreEqual(updatedItem.Description,"N22");
+        //}
 
         [TestMethod]
         public async Task SaveAsyncToDoList()
