@@ -98,22 +98,6 @@
     <Compile Include="Concrete\Entity.cs" />
     <Compile Include="Concrete\EntityRepository.cs" />
     <Compile Include="Concrete\MongoRepository.cs" />
-    <Compile Include="Migrations\201611291855162_InitDatabase.cs" />
-    <Compile Include="Migrations\201611291855162_InitDatabase.Designer.cs">
-      <DependentUpon>201611291855162_InitDatabase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611300453079_DelDate.cs" />
-    <Compile Include="Migrations\201611300453079_DelDate.Designer.cs">
-      <DependentUpon>201611300453079_DelDate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705150948123_AddDateProperty.cs" />
-    <Compile Include="Migrations\201705150948123_AddDateProperty.Designer.cs">
-      <DependentUpon>201705150948123_AddDateProperty.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705150949178_DeleteDateProperty.cs" />
-    <Compile Include="Migrations\201705150949178_DeleteDateProperty.Designer.cs">
-      <DependentUpon>201705150949178_DeleteDateProperty.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\TodoGroup.cs" />
     <Compile Include="Model\MongoModel\Task.cs" />
@@ -128,20 +112,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611291855162_InitDatabase.resx">
-      <DependentUpon>201611291855162_InitDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611300453079_DelDate.resx">
-      <DependentUpon>201611300453079_DelDate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705150948123_AddDateProperty.resx">
-      <DependentUpon>201705150948123_AddDateProperty.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705150949178_DeleteDateProperty.resx">
-      <DependentUpon>201705150949178_DeleteDateProperty.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
