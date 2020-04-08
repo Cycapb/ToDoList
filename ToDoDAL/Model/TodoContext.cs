@@ -10,8 +10,8 @@ namespace ToDoDAL.Model
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<TodoContext, Migrations.Configuration>("TodoEntities"));
         }
 
-        public virtual DbSet<TodoGroup> Group { get; set; }
+        public virtual DbSet<TodoGroup> Groups { get; set; }
 
-        public virtual DbSet<TodoItem> ToDoList { get; set; }
+        public virtual DbSet<TodoItem> TodoItems { get; set; }
     }
 }
