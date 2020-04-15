@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ToDoDAL.Core.Model;
 using ToDoWebAPI.Core.Infrastructure.Migrators;
+using Serilog;
+using System;
 
 namespace ToDoWebAPI.Core
 {
@@ -34,6 +36,8 @@ namespace ToDoWebAPI.Core
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            InitializeSerilog();
+
             if (env.IsDevelopment())
             {
                 app.UseStaticFiles();
@@ -41,9 +45,17 @@ namespace ToDoWebAPI.Core
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSerilogRequestLogging();
             app.UseMvc();
 
             DatabaseMigrator.MigrateDatabase(app);
+        }
+
+        private void InitializeSerilog()
+        {
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(_configuration)
+                .CreateLogger();
         }
     }
 }
