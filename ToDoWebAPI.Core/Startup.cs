@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ToDoDAL.Core.Model;
+using ToDoWebAPI.Core.Infrastructure.Migrators;
 
 namespace ToDoWebAPI.Core
 {
@@ -41,6 +42,8 @@ namespace ToDoWebAPI.Core
             }
 
             app.UseMvc();
+
+            DatabaseMigrator.MigrateDatabase(app);
         }
     }
 }
