@@ -18,5 +18,11 @@
   <ItemGroup>
     <ProjectReference Include="..\ToDoDAL.Core\ToDoDAL.Core.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Views\" />
+  </ItemGroup>
   
 </Project>
