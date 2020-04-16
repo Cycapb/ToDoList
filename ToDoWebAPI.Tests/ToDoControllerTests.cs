@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http.Results;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using ToDoDAL.Model;
-using ToDoWebAPI.Abstract;
+using ToDoProviders;
 using ToDoWebAPI.Controllers;
 using ToDoWebAPI.Models;
 
@@ -41,7 +41,7 @@ namespace ToDoWebAPI.Tests
 
             Assert.IsNotNull(contentresult);
             Assert.IsNotNull(contentresult.Content);
-            Assert.AreEqual(1,contentresult.Content.NoteId);
+            Assert.AreEqual(1, contentresult.Content.NoteId);
         }
 
         [TestMethod]
@@ -53,7 +53,7 @@ namespace ToDoWebAPI.Tests
             var contentResult = result as NotFoundResult;
 
             Assert.IsNotNull(contentResult);
-            Assert.IsInstanceOfType(contentResult,typeof(NotFoundResult));
+            Assert.IsInstanceOfType(contentResult, typeof(NotFoundResult));
         }
 
         [TestMethod]
@@ -62,10 +62,10 @@ namespace ToDoWebAPI.Tests
             _provider.Setup(m => m.GetValuesAsync()).ReturnsAsync(_todoList);
 
             var result = await _controller.GetTodoByUser("U1");
-            
+
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(IQueryable<TodoListDto>));
-            Assert.AreEqual(3,result.Count());
+            Assert.AreEqual(3, result.Count());
         }
 
         [TestMethod]
@@ -95,14 +95,14 @@ namespace ToDoWebAPI.Tests
 
             _provider.Verify(m => m.CreateValueAsync(It.IsAny<TodoItem>()), Times.Exactly(1));
             Assert.IsNotNull(contentResult);
-            Assert.AreEqual(contentResult.Content.NoteId,1);
-            Assert.AreEqual(contentResult.RouteName,"DefaultApi");
+            Assert.AreEqual(contentResult.Content.NoteId, 1);
+            Assert.AreEqual(contentResult.RouteName, "DefaultApi");
         }
 
         [TestMethod]
         public async Task UpdateTodoList_ReturnsBadrequest()
         {
-            _controller.ModelState.AddModelError("","");
+            _controller.ModelState.AddModelError("", "");
 
             var result = await _controller.UpdateToDo(new TodoItem());
 
@@ -115,8 +115,8 @@ namespace ToDoWebAPI.Tests
             var result = await _controller.UpdateToDo(new TodoItem());
             var contentResult = result as StatusCodeResult;
 
-            _provider.Verify(m => m.UpdateValueAsync(It.IsAny<TodoItem>()),Times.Exactly(1));
-            Assert.IsInstanceOfType(result,typeof(StatusCodeResult));
+            _provider.Verify(m => m.UpdateValueAsync(It.IsAny<TodoItem>()), Times.Exactly(1));
+            Assert.IsInstanceOfType(result, typeof(StatusCodeResult));
             Assert.IsNotNull(contentResult);
             Assert.AreEqual(contentResult.StatusCode, HttpStatusCode.NoContent);
         }
@@ -136,12 +136,12 @@ namespace ToDoWebAPI.Tests
         [TestMethod]
         public async Task Delete_ReturnsOkNegotiatedContentResult()
         {
-            _provider.Setup(x => x.GetValueAsync(1)).ReturnsAsync(new TodoItem() {Id = 1});
+            _provider.Setup(x => x.GetValueAsync(1)).ReturnsAsync(new TodoItem() { Id = 1 });
 
             var result = await _controller.DeleteToDoList(1);
             var contentResult = result as OkResult;
 
-            _provider.Verify(m => m.DeleteValueAsync(It.IsAny<int>()),Times.Exactly(1));
+            _provider.Verify(m => m.DeleteValueAsync(It.IsAny<int>()), Times.Exactly(1));
             Assert.IsNotNull(contentResult);
             Assert.IsInstanceOfType(contentResult, typeof(OkResult));
         }
@@ -159,8 +159,8 @@ namespace ToDoWebAPI.Tests
         public async Task UpdateTodoList_ReturnsNoContentStatus()
         {
             var result = await _controller.UpdateToDoList(_todoList);
-            
-            _provider.Verify(m => m.UpdateValuesAsync(It.IsAny<IEnumerable<TodoItem>>()),Times.Exactly(1));
+
+            _provider.Verify(m => m.UpdateValuesAsync(It.IsAny<IEnumerable<TodoItem>>()), Times.Exactly(1));
             Assert.IsNotNull(result);
         }
     }

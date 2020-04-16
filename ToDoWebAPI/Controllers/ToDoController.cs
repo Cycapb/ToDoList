@@ -4,8 +4,8 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using ToDoWebAPI.Abstract;
 using ToDoDAL.Model;
+using ToDoProviders;
 using ToDoWebAPI.Models;
 
 namespace ToDoWebAPI.Controllers
@@ -14,7 +14,7 @@ namespace ToDoWebAPI.Controllers
     public class ToDoController : ApiController
     {
         private readonly IEntityValueProvider<TodoItem> _valueProvider;
-        
+
         public ToDoController(IEntityValueProvider<TodoItem> valueProvider)
         {
             _valueProvider = valueProvider;
@@ -67,7 +67,7 @@ namespace ToDoWebAPI.Controllers
 
                 var dto = Convert(item);
 
-                return CreatedAtRoute("DefaultApi", new {id = item.Id}, dto);
+                return CreatedAtRoute("DefaultApi", new { id = item.Id }, dto);
             }
             return BadRequest(ModelState);
         }

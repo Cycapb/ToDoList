@@ -1,20 +1,20 @@
-﻿using System;
+﻿using Ninject;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
-using Ninject;
+using ToDoBussinessLogic.Providers;
 using ToDoDAL.Abstract;
 using ToDoDAL.Concrete;
 using ToDoDAL.Model;
 using ToDoDAL.Model.MongoModel;
-using ToDoWebAPI.Abstract;
-using ToDoWebAPI.Concrete;
+using ToDoProviders;
 
 namespace ToDoWebAPI.Infrastructure
 {
-    public class NinjectDependencyResolver:IDependencyResolver
+    public class NinjectDependencyResolver : IDependencyResolver
     {
         private readonly IKernel _kernel;
-        
+
 
         public NinjectDependencyResolver(IKernel kernel)
         {

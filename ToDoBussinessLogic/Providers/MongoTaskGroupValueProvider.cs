@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using ToDoDAL.Abstract;
-using ToDoWebAPI.Abstract;
 using ToDoDAL.Model.MongoModel;
+using ToDoProviders;
 
-namespace ToDoWebAPI.Concrete
+namespace ToDoBussinessLogic.Providers
 {
     public class MongoTaskGroupValueProvider : IMongoValueProvider<TaskGroup>
     {

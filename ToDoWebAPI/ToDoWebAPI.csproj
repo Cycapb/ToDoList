@@ -212,16 +212,10 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\IEntityValueProvider.cs" />
-    <Compile Include="Abstract\IMongoValueProvider.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Concrete\GroupProvider.cs" />
-    <Compile Include="Concrete\MongoTaskGroupValueProvider.cs" />
-    <Compile Include="Concrete\MongoTaskValueProvider.cs" />
-    <Compile Include="Concrete\ToDoListProvider.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\ToDoController.cs" />
     <Compile Include="Global.asax.cs">
@@ -252,11 +246,20 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Concrete\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ToDoBussinessLogic\ToDoBussinessLogic.csproj">
+      <Project>{396BA7F2-AD3A-42BB-A206-37339DC73BA8}</Project>
+      <Name>ToDoBussinessLogic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ToDoDAL\ToDoDAL.csproj">
       <Project>{b7048ec4-aaac-42ac-a5fc-97008925ff10}</Project>
       <Name>ToDoDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ToDoProviders\ToDoProviders.csproj">
+      <Project>{A5223687-19C4-4AA6-8755-1A45910C63E3}</Project>
+      <Name>ToDoProviders</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

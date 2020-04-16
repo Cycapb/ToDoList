@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http.Results;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using ToDoDAL.Model;
-using ToDoWebAPI.Abstract;
+using ToDoProviders;
 using ToDoWebAPI.Controllers;
 using ToDoWebAPI.Models;
 
@@ -49,13 +49,13 @@ namespace ToDoWebAPI.Tests
         [TestMethod]
         public async Task GetGroup_ReturnsOkNegotiationResult()
         {
-            _provider.Setup(m => m.GetValueAsync(It.IsAny<int>())).ReturnsAsync(new TodoGroup() {Id = 10});
+            _provider.Setup(m => m.GetValueAsync(It.IsAny<int>())).ReturnsAsync(new TodoGroup() { Id = 10 });
 
             var result = await _controller.GetGroup(It.IsAny<int>());
             var contentResult = result as OkNegotiatedContentResult<GroupDto>;
 
             Assert.IsNotNull(contentResult);
-            Assert.AreEqual(contentResult.Content.GroupId,10);
+            Assert.AreEqual(contentResult.Content.GroupId, 10);
         }
 
         [TestMethod]
@@ -77,7 +77,7 @@ namespace ToDoWebAPI.Tests
             var result = await _controller.GetValues(userId);
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(result.Count(),2);
+            Assert.AreEqual(result.Count(), 2);
         }
 
         [TestMethod]
@@ -106,17 +106,17 @@ namespace ToDoWebAPI.Tests
             var result = await _controller.GetTodoLists(groupId);
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(result.Count(),2);
+            Assert.AreEqual(result.Count(), 2);
         }
 
         [TestMethod]
         public async Task UpdateGroup_ReturnsBadRequestWithModelState()
         {
-            _controller.ModelState.AddModelError("","");
+            _controller.ModelState.AddModelError("", "");
 
             var result = await _controller.UpdateGroup(new TodoGroup());
 
-            Assert.IsInstanceOfType(result,typeof(InvalidModelStateResult));
+            Assert.IsInstanceOfType(result, typeof(InvalidModelStateResult));
         }
 
         [TestMethod]
@@ -126,7 +126,7 @@ namespace ToDoWebAPI.Tests
             var result = await _controller.UpdateGroup(It.IsAny<TodoGroup>());
             var contentResult = result as StatusCodeResult;
 
-            _provider.Verify(m => m.UpdateValueAsync(It.IsAny<TodoGroup>()), Times.Exactly(1));    
+            _provider.Verify(m => m.UpdateValueAsync(It.IsAny<TodoGroup>()), Times.Exactly(1));
             Assert.IsNotNull(contentResult);
             Assert.AreEqual(contentResult.StatusCode, HttpStatusCode.NoContent);
         }
@@ -159,7 +159,7 @@ namespace ToDoWebAPI.Tests
         [TestMethod]
         public async Task DeleteGroup_ReturnsStatusOk()
         {
-            _provider.Setup(m => m.GetValueAsync(It.IsAny<int>())).ReturnsAsync(new TodoGroup() {Id = 1});
+            _provider.Setup(m => m.GetValueAsync(It.IsAny<int>())).ReturnsAsync(new TodoGroup() { Id = 1 });
 
             var result = await _controller.DeleteGroup(It.IsAny<int>());
             var contentResult = result as OkNegotiatedContentResult<TodoGroup>;
@@ -171,26 +171,26 @@ namespace ToDoWebAPI.Tests
         [TestMethod]
         public async Task CreateGroup_ReturnsBadRequest()
         {
-            _controller.ModelState.AddModelError("","");
+            _controller.ModelState.AddModelError("", "");
 
             var result = await _controller.CreateGroup(new TodoGroup());
             var contentResult = result as InvalidModelStateResult;
 
             Assert.IsNotNull(contentResult);
-            Assert.AreEqual(contentResult.ModelState.Keys.Count,1);
+            Assert.AreEqual(contentResult.ModelState.Keys.Count, 1);
         }
 
         [TestMethod]
         public async Task CreateGroup_ReturnsCreateAtRouteResult()
         {
-            var result = await _controller.CreateGroup(new TodoGroup() {Id = 1});
+            var result = await _controller.CreateGroup(new TodoGroup() { Id = 1 });
             var contentResult = result as CreatedAtRouteNegotiatedContentResult<TodoGroup>;
 
             _provider.Verify(m => m.CreateValueAsync(It.IsAny<TodoGroup>()), Times.Exactly(1));
             Assert.IsNotNull(result);
             Assert.IsNotNull(contentResult);
-            Assert.AreEqual(contentResult.RouteName,"DefaultApi");
-            Assert.AreEqual(contentResult.Content.Id,1);
+            Assert.AreEqual(contentResult.RouteName, "DefaultApi");
+            Assert.AreEqual(contentResult.Content.Id, 1);
         }
     }
 }
