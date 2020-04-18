@@ -7,43 +7,43 @@ using ToDoProviders;
 
 namespace ToDoBussinessLogic.Providers
 {
-    public class ToDoListProvider : IEntityValueProvider<TodoItem>
+    public class TodoGroupProvider : IEntityValueProvider<TodoGroup>
     {
-        private readonly IRepository<TodoItem> _repository;
+        private readonly IRepository<TodoGroup> _repository;
 
-        public ToDoListProvider(IRepository<TodoItem> repository)
+        public TodoGroupProvider(IRepository<TodoGroup> repository)
         {
             _repository = repository;
         }
 
-        public async Task<IQueryable<TodoItem>> GetValuesAsync()
+        public async Task<IQueryable<TodoGroup>> GetValuesAsync()
         {
-            return (await _repository.GetListAsync());
+            return await _repository.GetListAsync();
         }
 
-        public async Task<TodoItem> GetValueAsync(int id)
+        public async Task<TodoGroup> GetValueAsync(int id)
         {
             var item = await _repository.GetItemAsync(id);
             return item;
         }
 
-        public async Task CreateValueAsync(TodoItem item)
+        public async Task CreateValueAsync(TodoGroup item)
         {
             await _repository.CreateAsync(item);
             await _repository.SaveAsync();
         }
 
-        public async Task UpdateValueAsync(TodoItem item)
+        public async Task UpdateValueAsync(TodoGroup item)
         {
             await _repository.UpdateAsync(item);
             await _repository.SaveAsync();
         }
 
-        public async Task UpdateValuesAsync(IEnumerable<TodoItem> items)
+        public async Task UpdateValuesAsync(IEnumerable<TodoGroup> items)
         {
-            foreach (var item in items)
+            foreach (var group in items)
             {
-                await _repository.UpdateAsync(item);
+                await _repository.UpdateAsync(group);
             }
             await _repository.SaveAsync();
         }

@@ -4,10 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ToDoDAL.Core.Model;
-using ToDoWebAPI.Core.Infrastructure.Migrators;
 using Serilog;
-using System;
+using ToDoBussinessLogic.Providers;
+using ToDoDAL.Abstract;
+using ToDoDAL.Concrete;
+using ToDoDAL.Core.Model;
+using ToDoDAL.Model;
+using ToDoProviders;
+using ToDoWebAPI.Core.Infrastructure.Migrators;
 
 namespace ToDoWebAPI.Core
 {
@@ -25,12 +29,22 @@ namespace ToDoWebAPI.Core
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TodoContextCore>(options => 
+            services.AddDbContext<TodoContextCore>(options =>
             {
                 options.UseLazyLoadingProxies();
                 options.UseSqlServer(_configuration["ConnectionStrings:TodoEntities:ConnectionString"]);
             });
-            services.AddMvc().AddMvcOptions(setupAction => setupAction.EnableEndpointRouting = false);
+            services
+                .AddMvc()
+                .AddMvcOptions(setupAction =>
+                {
+                    setupAction.EnableEndpointRouting = false;
+                })
+                .AddXmlDataContractSerializerFormatters();
+            services.AddTransient<IRepository<TodoItem>, EntityRepositoryCore<TodoItem, TodoContextCore>>();
+            services.AddTransient<IRepository<TodoGroup>, EntityRepositoryCore<TodoGroup, TodoContextCore>>();
+            services.AddTransient<IEntityValueProvider<TodoItem>, TodoItemProvider>();
+            services.AddTransient<IEntityValueProvider<TodoGroup>, TodoGroupProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

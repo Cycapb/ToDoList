@@ -26,8 +26,8 @@ namespace ToDoWebAPI.Infrastructure
         {
             _kernel.Bind<IRepository<TodoGroup>>().To<EntityRepository<TodoGroup>>();
             _kernel.Bind<IRepository<TodoItem>>().To<EntityRepository<TodoItem>>();
-            _kernel.Bind<IEntityValueProvider<TodoItem>>().To<ToDoListProvider>();
-            _kernel.Bind<IEntityValueProvider<TodoGroup>>().To<GroupProvider>();
+            _kernel.Bind<IEntityValueProvider<TodoItem>>().To<TodoItemProvider>();
+            _kernel.Bind<IEntityValueProvider<TodoGroup>>().To<TodoGroupProvider>();
             _kernel.Bind<IMongoValueProvider<TaskGroup>>().To<MongoTaskGroupValueProvider>();
             _kernel.Bind<IMongoValueProvider<ToDoDAL.Model.MongoModel.Task>>().To<MongoTaskValueProvider>();
             _kernel.Bind<IMongoRepository<TaskGroup>>().To<MongoRepository<TaskGroup>>();

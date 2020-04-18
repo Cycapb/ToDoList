@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ToDoBussinessLogic\ToDoBussinessLogic.csproj" />
     <ProjectReference Include="..\ToDoDAL.Core\ToDoDAL.Core.csproj" />
     <ProjectReference Include="..\ToDoProviders\ToDoProviders.csproj" />
   </ItemGroup>

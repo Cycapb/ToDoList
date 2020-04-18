@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ToDoDAL.Model;
@@ -21,14 +22,13 @@ namespace ToDoWebAPI.Core.Controllers
         }
 
         [HttpGet("{id:int}")]
-        [Produces("application/json", "application/xml")]
         public async Task<IActionResult> GetGroup(int id)
         {
             var group = await _valueProvider.GetValueAsync(id);
 
             if (group == null)
             {
-                return NotFound();
+                return NoContent();
             }
             var groupDto = new TodoGroupDto()
             {
@@ -40,7 +40,7 @@ namespace ToDoWebAPI.Core.Controllers
         }
 
         [HttpGet("{userId}")]
-        public async Task<IActionResult> GetValues(string userId)
+        public async Task<IEnumerable<TodoGroupDto>> GetValues(string userId)
         {
             var todoGroups = await _valueProvider.GetValuesAsync();
             var todoGroupsDtos = todoGroups?
@@ -52,11 +52,11 @@ namespace ToDoWebAPI.Core.Controllers
                     Name = x.Name
                 });
 
-            return Ok(todoGroupsDtos);
+            return todoGroupsDtos;
         }
 
         [HttpGet("{id:int}/todos")]
-        public async Task<IActionResult> GetTodoLists(int id)
+        public async Task<IEnumerable<TodoItemDto>> GetTodoLists(int id)
         {
             var group = await _valueProvider.GetValueAsync(id);
 
@@ -69,23 +69,23 @@ namespace ToDoWebAPI.Core.Controllers
                     StatusId = x.IsFinished,
                 });
 
-            return Ok(items);
-
+            return items;
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateGroup(TodoGroup group)
+        public async Task<IActionResult> CreateGroup([FromBody]TodoGroup group)
         {
             if (ModelState.IsValid)
             {
                 await _valueProvider.CreateValueAsync(group);
-                return CreatedAtRoute("DefaultApi", new { id = group.Id }, group);
+                return CreatedAtAction(nameof(CreateGroup),group);
             }
+
             return BadRequest(ModelState);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateGroup(TodoGroup item)
+        public async Task<IActionResult> UpdateGroup([FromBody]TodoGroup item)
         {
             if (ModelState.IsValid)
             {
