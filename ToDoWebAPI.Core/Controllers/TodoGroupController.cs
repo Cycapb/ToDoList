@@ -63,7 +63,7 @@ namespace ToDoWebAPI.Core.Controllers
             var items = group?.TodoItems.AsQueryable()
                 .Select(x => new TodoItemDto()
                 {
-                    NoteId = x.Id,
+                    Id = x.Id,
                     Description = x.Description,
                     GroupName = x.Group.Name,
                     StatusId = x.IsFinished,
