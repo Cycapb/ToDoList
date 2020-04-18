@@ -22,7 +22,7 @@ namespace ToDoWebAPI.Core.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetGroup(int id)
+        public async Task<IActionResult> GetTodoGroup(int id)
         {
             var group = await _valueProvider.GetValueAsync(id);
 
@@ -40,7 +40,7 @@ namespace ToDoWebAPI.Core.Controllers
         }
 
         [HttpGet("{userId}")]
-        public async Task<IEnumerable<TodoGroupDto>> GetValues(string userId)
+        public async Task<IEnumerable<TodoGroupDto>> GetItems(string userId)
         {
             var todoGroups = await _valueProvider.GetValuesAsync();
             var todoGroupsDtos = todoGroups?
@@ -56,7 +56,7 @@ namespace ToDoWebAPI.Core.Controllers
         }
 
         [HttpGet("{id:int}/todos")]
-        public async Task<IEnumerable<TodoItemDto>> GetTodoLists(int id)
+        public async Task<IEnumerable<TodoItemDto>> GetTodoItems(int id)
         {
             var group = await _valueProvider.GetValueAsync(id);
 
@@ -73,19 +73,19 @@ namespace ToDoWebAPI.Core.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateGroup([FromBody]TodoGroup group)
+        public async Task<IActionResult> CreateTodoGroup([FromBody]TodoGroup group)
         {
             if (ModelState.IsValid)
             {
                 await _valueProvider.CreateValueAsync(group);
-                return CreatedAtAction(nameof(CreateGroup),group);
+                return CreatedAtAction(nameof(CreateTodoGroup),group);
             }
 
             return BadRequest(ModelState);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateGroup([FromBody]TodoGroup item)
+        public async Task<IActionResult> UpdateTodoGroup([FromBody]TodoGroup item)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +96,7 @@ namespace ToDoWebAPI.Core.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteGroup(int id)
+        public async Task<IActionResult> DeleteTodoGroup(int id)
         {
             try
             {

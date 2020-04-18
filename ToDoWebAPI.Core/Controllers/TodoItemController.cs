@@ -71,7 +71,7 @@ namespace ToDoWebAPI.Core.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateToDo([FromBody]TodoItem item)
+        public async Task<IActionResult> UpdateTodoItem([FromBody]TodoItem item)
         {
             if (ModelState.IsValid)
             {
@@ -83,7 +83,7 @@ namespace ToDoWebAPI.Core.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteToDoList(int id)
+        public async Task<IActionResult> DeleteTodoItem(int id)
         {
             var item = await _entityValueProvider.GetValueAsync(id);
 
