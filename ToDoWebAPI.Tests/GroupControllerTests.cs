@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http.Results;
-using ToDoDAL.Model;
+using ToDoDomainModels.Model;
 using ToDoProviders;
 using ToDoWebAPI.Controllers;
 using ToDoWebAPI.Models;

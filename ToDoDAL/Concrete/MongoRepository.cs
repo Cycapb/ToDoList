@@ -1,27 +1,28 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
+using MongoDB.Driver.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MongoDB.Bson;
-using MongoDB.Driver;
-using MongoDB.Driver.Linq;
 using ToDoDAL.Abstract;
+using ToDoDomainModels.Repositories;
 
 namespace ToDoDAL.Concrete
 {
-    public class MongoRepository<T>:IMongoRepository<T> where T:class,IEntity
+    public class MongoRepository<T> : IMongoRepository<T> where T : class, IEntity
     {
         private readonly MongoClient _mongoClient;
         private readonly IMongoDatabase _mongoDatabase;
-        private readonly IMongoCollection<T> _collection; 
+        private readonly IMongoCollection<T> _collection;
 
         public MongoRepository()
         {
             _mongoClient = new MongoClient("mongodb://192.168.1.144:27017");
             _mongoDatabase = _mongoClient.GetDatabase("todo");
-            _collection = _mongoDatabase.GetCollection<T>(GetCollectionNameFromType(typeof (T)));
+            _collection = _mongoDatabase.GetCollection<T>(GetCollectionNameFromType(typeof(T)));
         }
-        
+
         private string GetCollectionNameFromType(Type entitytype)
         {
             return entitytype.Name.ToLower();
@@ -47,9 +48,9 @@ namespace ToDoDAL.Concrete
             {
                 return null;
             }
-            
+
         }
-        
+
         public async Task<T> GetItemAsync(string id)
         {
             try
@@ -60,7 +61,7 @@ namespace ToDoDAL.Concrete
             {
                 return null;
             }
-            
+
         }
 
         public T Create(T item)

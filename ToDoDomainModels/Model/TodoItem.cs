@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ToDoDAL.Model
+namespace ToDoDomainModels.Model
 {
     [Table("TodoItem")]
     public class TodoItem

@@ -93,8 +93,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IEntity.cs" />
-    <Compile Include="Abstract\IMongoRepository.cs" />
-    <Compile Include="Abstract\IRepository.cs" />
     <Compile Include="Concrete\Entity.cs" />
     <Compile Include="Concrete\EntityRepository.cs" />
     <Compile Include="Concrete\MongoRepository.cs" />
@@ -103,11 +101,9 @@
       <DependentUpon>202004081722119_InitialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Model\TodoGroup.cs" />
     <Compile Include="Model\MongoModel\Task.cs" />
     <Compile Include="Model\MongoModel\TaskGroup.cs" />
     <Compile Include="Model\TodoContext.cs" />
-    <Compile Include="Model\TodoItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +117,12 @@
     <EmbeddedResource Include="Migrations\202004081722119_InitialMigration.resx">
       <DependentUpon>202004081722119_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ToDoDomainModels\ToDoDomainModels.csproj">
+      <Project>{739483f4-367b-4ea8-9f89-a2c36a1e6a87}</Project>
+      <Name>ToDoDomainModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

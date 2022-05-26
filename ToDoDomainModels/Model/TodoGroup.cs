@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ToDoDAL.Model
+namespace ToDoDomainModels.Model
 {
     [Table("TodoGroup")]
     public class TodoGroup

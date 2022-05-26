@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ToDoDAL.Model;
+using ToDoDomainModels.Model;
 using ToDoProviders;
 using ToDoWebAPI.Core.Models;
 
@@ -12,11 +12,11 @@ namespace ToDoWebAPI.Core.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TodoGroupController : ControllerBase
+    public class TodoGroupsController : ControllerBase
     {
         private readonly IEntityValueProvider<TodoGroup> _valueProvider;
 
-        public TodoGroupController(IEntityValueProvider<TodoGroup> valueProvider)
+        public TodoGroupsController(IEntityValueProvider<TodoGroup> valueProvider)
         {
             _valueProvider = valueProvider;
         }
@@ -73,19 +73,19 @@ namespace ToDoWebAPI.Core.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTodoGroup([FromBody]TodoGroup group)
+        public async Task<IActionResult> CreateTodoGroup([FromBody] TodoGroup group)
         {
             if (ModelState.IsValid)
             {
                 await _valueProvider.CreateValueAsync(group);
-                return CreatedAtAction(nameof(CreateTodoGroup),group);
+                return CreatedAtAction(nameof(CreateTodoGroup), group);
             }
 
             return BadRequest(ModelState);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateTodoGroup([FromBody]TodoGroup item)
+        public async Task<IActionResult> UpdateTodoGroup([FromBody] TodoGroup item)
         {
             if (ModelState.IsValid)
             {

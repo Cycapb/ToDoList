@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using ToDoDAL.Abstract;
+using ToDoDomainModels.Repositories;
 
 namespace ToDoDAL.Core.Model
 {

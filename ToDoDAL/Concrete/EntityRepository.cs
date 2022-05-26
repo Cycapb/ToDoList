@@ -2,19 +2,19 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using ToDoDAL.Abstract;
 using ToDoDAL.Model;
+using ToDoDomainModels.Repositories;
 using Task = System.Threading.Tasks.Task;
 
 namespace ToDoDAL.Concrete
 {
-    public class EntityRepository<T>:IRepository<T> where T:class
+    public class EntityRepository<T> : IRepository<T> where T : class
     {
         private readonly TodoContext _context;
         private readonly DbSet<T> _dbSet;
 
         private bool _disposed = false;
-        
+
         public EntityRepository()
         {
             _context = new TodoContext();
@@ -22,7 +22,7 @@ namespace ToDoDAL.Concrete
         }
 
         public void Dispose()
-        {  
+        {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
@@ -55,7 +55,7 @@ namespace ToDoDAL.Concrete
 
         public virtual Task CreateAsync(T item)
         {
-            return Task.Run(()=>_dbSet.Add(item));
+            return Task.Run(() => _dbSet.Add(item));
         }
 
         public virtual Task DeleteAsync(int id)

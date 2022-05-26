@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using ToDoBussinessLogic.Providers;
-using ToDoDAL.Abstract;
 using ToDoDAL.Concrete;
-using ToDoDAL.Model;
 using ToDoDAL.Model.MongoModel;
+using ToDoDomainModels.Model;
+using ToDoDomainModels.Repositories;
 using ToDoProviders;
 
 namespace ToDoWebAPI.Infrastructure

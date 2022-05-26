@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ToDoDAL.Abstract;
 using ToDoDAL.Model.MongoModel;
+using ToDoDomainModels.Repositories;
 using ToDoProviders;
 
 namespace ToDoBussinessLogic.Providers

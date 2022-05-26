@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ToDoDAL.Abstract
+namespace ToDoDomainModels.Repositories
 {
     public interface IMongoRepository<T> where T:class
     {
