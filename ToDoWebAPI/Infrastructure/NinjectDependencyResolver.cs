@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using ToDoBussinessLogic.Providers;
 using ToDoDAL.Concrete;
-using ToDoDAL.Model.MongoModel;
 using ToDoDomainModels.Model;
+using ToDoDomainModels.Model.Mongo;
 using ToDoDomainModels.Repositories;
 using ToDoProviders;
 
@@ -29,7 +29,7 @@ namespace ToDoWebAPI.Infrastructure
             _kernel.Bind<IEntityValueProvider<TodoItem>>().To<TodoItemProvider>();
             _kernel.Bind<IEntityValueProvider<TodoGroup>>().To<TodoGroupProvider>();
             _kernel.Bind<IMongoValueProvider<TaskGroup>>().To<MongoTaskGroupValueProvider>();
-            _kernel.Bind<IMongoValueProvider<ToDoDAL.Model.MongoModel.Task>>().To<MongoTaskValueProvider>();
+            _kernel.Bind<IMongoValueProvider<Task>>().To<MongoTaskValueProvider>();
             _kernel.Bind<IMongoRepository<TaskGroup>>().To<MongoRepository<TaskGroup>>();
             _kernel.Bind<IMongoRepository<ToDoDAL.Model.MongoModel.Task>>().To<MongoRepository<ToDoDAL.Model.MongoModel.Task>>();
         }

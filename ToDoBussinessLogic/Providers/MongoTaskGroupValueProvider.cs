@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ToDoDAL.Model.MongoModel;
+using ToDoDomainModels.Model.Mongo;
 using ToDoDomainModels.Repositories;
 using ToDoProviders;
 

@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ToDoDAL.Abstract;
+using ToDoDomainModels.Model.Mongo;
 using ToDoDomainModels.Repositories;
 
 namespace ToDoDAL.Concrete
@@ -82,7 +82,7 @@ namespace ToDoDAL.Concrete
             _collection.DeleteOne(filter);
         }
 
-        public async Task DeleteAsync(string id)
+        public async System.Threading.Tasks.Task DeleteAsync(string id)
         {
             var filter = new BsonDocument("_id", id);
             await _collection.FindOneAndDeleteAsync(filter);
@@ -94,7 +94,7 @@ namespace ToDoDAL.Concrete
             _collection.ReplaceOne(filter, item);
         }
 
-        public async Task UpdateAsync(T item)
+        public async System.Threading.Tasks.Task UpdateAsync(T item)
         {
             var filter = new BsonDocument("_id", new BsonObjectId(new ObjectId(item.Id)));
             await _collection.ReplaceOneAsync(filter, item);
