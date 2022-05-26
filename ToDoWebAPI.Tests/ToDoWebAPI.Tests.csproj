@@ -108,6 +108,10 @@
       <Project>{b7048ec4-aaac-42ac-a5fc-97008925ff10}</Project>
       <Name>ToDoDAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ToDoDomainModels\ToDoDomainModels.csproj">
+      <Project>{739483F4-367B-4EA8-9F89-A2C36A1E6A87}</Project>
+      <Name>ToDoDomainModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ToDoProviders\ToDoProviders.csproj">
       <Project>{A5223687-19C4-4AA6-8755-1A45910C63E3}</Project>
       <Name>ToDoProviders</Name>

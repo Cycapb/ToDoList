@@ -1,6 +1,7 @@
 namespace ToDoDAL.Model
 {
     using System.Data.Entity;
+    using ToDoDomainModels.Model;
 
     public partial class TodoContext : DbContext
     {

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ToDoDAL.Abstract;
-using ToDoDAL.Model;
+using ToDoDomainModels.Model;
+using ToDoDomainModels.Repositories;
 using ToDoProviders;
 
 namespace ToDoBussinessLogic.Providers

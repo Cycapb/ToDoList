@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ToDoDAL\ToDoDAL.csproj" />
+    <ProjectReference Include="..\ToDoDomainModels\ToDoDomainModels.csproj" />
     <ProjectReference Include="..\ToDoProviders\ToDoProviders.csproj" />
   </ItemGroup>
 

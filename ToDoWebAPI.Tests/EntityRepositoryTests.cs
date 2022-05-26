@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ToDoDAL.Model;
+using ToDoDomainModels.Model;
 
 namespace ToDoWebAPI.Tests
 {

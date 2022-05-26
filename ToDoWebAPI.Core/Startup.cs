@@ -6,10 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using ToDoBussinessLogic.Providers;
-using ToDoDAL.Abstract;
-using ToDoDAL.Concrete;
 using ToDoDAL.Core.Model;
-using ToDoDAL.Model;
+using ToDoDomainModels.Model;
+using ToDoDomainModels.Repositories;
 using ToDoProviders;
 using ToDoWebAPI.Core.Infrastructure.Migrators;
 

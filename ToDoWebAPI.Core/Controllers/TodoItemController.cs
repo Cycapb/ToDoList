@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
-using ToDoDAL.Model;
+using ToDoDomainModels.Model;
 using ToDoProviders;
 using ToDoWebAPI.Core.Models;
 
@@ -10,11 +10,11 @@ namespace ToDoWebAPI.Core.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TodoItemController : ControllerBase
+    public class TodoItemsController : ControllerBase
     {
         private readonly IEntityValueProvider<TodoItem> _entityValueProvider;
 
-        public TodoItemController(IEntityValueProvider<TodoItem> entityValueProvider)
+        public TodoItemsController(IEntityValueProvider<TodoItem> entityValueProvider)
         {
             _entityValueProvider = entityValueProvider;
         }
@@ -56,7 +56,7 @@ namespace ToDoWebAPI.Core.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTodoItem([FromBody]TodoItem item)
+        public async Task<IActionResult> CreateTodoItem([FromBody] TodoItem item)
         {
             if (ModelState.IsValid)
             {
@@ -71,7 +71,7 @@ namespace ToDoWebAPI.Core.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateTodoItem([FromBody]TodoItem item)
+        public async Task<IActionResult> UpdateTodoItem([FromBody] TodoItem item)
         {
             if (ModelState.IsValid)
             {
