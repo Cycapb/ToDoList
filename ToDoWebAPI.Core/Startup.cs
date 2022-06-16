@@ -44,6 +44,7 @@ namespace ToDoWebAPI.Core
             services.AddTransient<IEntityValueProvider<TodoGroup>, TodoGroupProvider>();
         }
 
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             InitializeSerilog();
